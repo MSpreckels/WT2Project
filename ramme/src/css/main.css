@@ -1,0 +1,29 @@
+.ramButton {
+    height: 100px;
+    width: 100px;
+
+    padding: 0px;
+
+    border: none;
+
+    background: url("../images/button.png") no-repeat scroll 0 0 transparent;
+    background-size: 100%;
+}
+
+.ramButton:hover {
+    background: url("../images/button-hover.png") no-repeat scroll 0 0 transparent;
+    background-size: 100%;
+}
+
+.ramButton:active {
+    background: url("../images/button-click.png") no-repeat scroll 0 0 transparent;
+    background-size: 100%;
+}
+
+.ramButton:focus {
+    outline: 0;
+}
+
+main {
+    width: 100%;
+}
