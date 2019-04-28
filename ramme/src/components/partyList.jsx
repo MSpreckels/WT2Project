@@ -9,11 +9,16 @@ class PartyList extends Component {
       <div className="center">
         <ul className="partyList center">
           {this.state.users.map(user => (
-            <li>{user !== "" ? user : "..."}</li>
+            <li key={user}>{user !== "" ? user : "..."}</li>
           ))}
         </ul>
       </div>
     );
+  }
+
+  getKey() {
+    let i = 0;
+    return i++;
   }
 }
 
