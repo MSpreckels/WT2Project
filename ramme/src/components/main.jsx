@@ -1,21 +1,25 @@
 import React, { Component } from "react";
 import Action from "./action";
 import Activity from "./activity";
+import Text from "./text";
 import "../css/main.css";
 
 class Main extends Component {
-  state = {};
+  state = {
+    activity: 1
+  };
 
   onButtonClick = () => {
-    console.log("Button clicked! Search for available party and switch view.");
+    const activity = this.state.activity === 0 ? 1 : 0;
+    this.setState({ activity });
   };
 
   render() {
     return (
       <main>
-        {/* TODO: Add text component here */}
+        <Text />
         <Action onButtonClick={this.onButtonClick} />
-        <Activity />
+        <Activity activity={this.state.activity} />
       </main>
     );
   }

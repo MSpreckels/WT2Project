@@ -6,7 +6,7 @@ class PartyList extends Component {
   };
   render() {
     return (
-      <div className="center">
+      <div className="c">
         <ul className="partyList center">
           <li key="0">
             {this.state.users[0] === "" ? "..." : this.state.users[0]}

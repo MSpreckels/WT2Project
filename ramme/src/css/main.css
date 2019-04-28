@@ -1,59 +1,101 @@
 .ramButton {
-    height: 130px;
-    width: 130px;
+  height: 130px;
+  width: 130px;
 
-    padding: 0px;
-    margin-top: 50px;
-    margin-bottom: 50px;
+  padding: 0px;
+  margin-top: 25px;
+  margin-bottom: 25px;
 
-    border: none;
+  border: none;
 
-    background: url("../images/button.png") no-repeat scroll 0 0 transparent;
-    background-size: 100%;
+  background: url("../images/button.png") no-repeat scroll 0 0 transparent;
+  background-size: 100%;
 }
 
 .ramButton:hover {
-    background: url("../images/button-hover.png") no-repeat scroll 0 0 transparent;
-    background-size: 100%;
+  background: url("../images/button-hover.png") no-repeat scroll 0 0 transparent;
+  background-size: 100%;
 }
 
 .ramButton:active {
-    background: url("../images/button-click.png") no-repeat scroll 0 0 transparent;
-    background-size: 100%;
+  background: url("../images/button-click.png") no-repeat scroll 0 0 transparent;
+  background-size: 100%;
 }
 
 .ramButton:focus {
-    outline: 0;
+  outline: 0;
+}
+
+.dropdown {
+  color: #076d00;
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  width: 100%;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  height: 24px;
+  text-align-last: center;
+  outline: none;
+  margin: 0;
+}
+
+.dropdownList {
+  color: #076d00;
+  text-align: center;
+  width: 75%;
+  padding: 0;
+}
+
+.dropdownList > li {
+  border: none;
+  margin: 0;
+}
+.dropdownList > li:first-child {
+  list-style-image: url("../images/location-24px.svg");
+}
+.dropdownList > li:last-child {
+  list-style-image: url("../images/time-24px.svg");
+}
+
+.catchphrase {
+  text-align: center;
+  color: #076d00;
+  margin-top: 25px;
+  margin-bottom: 25px;
 }
 
 .partyList {
-    color: #076d00;
-    display: block;
-    text-align: center;
-    list-style-image: url("../images/baseline-person_pin-24px.svg");
-    width: 75%;
-    padding: 0;
+  color: #076d00;
+  text-align: center;
+  width: 75%;
+  padding: 0;
+  list-style: none outside url("../images/baseline-person_pin-24px.svg");
 }
 
 .partyList > li {
-    background-color: white;
-    border: none;
-    margin: 0;
+  background-color: white;
+  border: none;
+  margin: 0;
+  width: 100%;
 }
 
 .partyList > li:hover {
-    background: rgb(247, 247, 247);
+  background: rgb(247, 247, 247);
 }
 
 .partyList > li:first-of-type {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .partyList > li:last-of-type {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 main {
-    width: 100%;
+  width: 100%;
 }
