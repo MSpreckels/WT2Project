@@ -8,17 +8,21 @@ class PartyList extends Component {
     return (
       <div className="center">
         <ul className="partyList center">
-          {this.state.users.map(user => (
-            <li key={user}>{user !== "" ? user : "..."}</li>
-          ))}
+          <li key="0">
+            {this.state.users[0] === "" ? "..." : this.state.users[0]}
+          </li>
+          <li key="1">
+            {this.state.users[1] === "" ? "..." : this.state.users[1]}
+          </li>
+          <li key="2">
+            {this.state.users[2] === "" ? "..." : this.state.users[2]}
+          </li>
+          <li key="3">
+            {this.state.users[3] === "" ? "..." : this.state.users[3]}
+          </li>
         </ul>
       </div>
     );
-  }
-
-  getKey() {
-    let i = 0;
-    return i++;
   }
 }
 

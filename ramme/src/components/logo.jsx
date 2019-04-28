@@ -4,7 +4,7 @@ import logo from "../images/logo.png";
 class Logo extends Component {
   state = {};
   render() {
-    return <img src={logo} alt="Logo" />;
+    return <img src={logo} alt="Logo" className="center" />;
   }
 }
 

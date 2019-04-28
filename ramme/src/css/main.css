@@ -25,12 +25,12 @@
 }
 
 .partyList {
-  box-sizing: content-box;
   color: #076d00;
   display: block;
   text-align: center;
   list-style-image: url("../images/baseline-person_pin-24px.svg");
   width: 75%;
+  padding: 0;
 }
 
 .partyList > li {
@@ -40,16 +40,16 @@
 }
 
 .partyList > li:hover {
-  background: rgb(238, 238, 238);
+  background: rgb(247, 247, 247);
 }
 
 .partyList > li:first-of-type {
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .partyList > li:last-of-type {
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 main {
