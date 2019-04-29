@@ -17,7 +17,7 @@ class LocationAndTime extends Component {
     return (
       <form className="locationAndTime">
         <div>
-          <label for="location">
+          <label htmlFor="location">
             <img src={location} alt="location" className="" />
           </label>
           <select id="location" className="dropdown">
@@ -29,7 +29,7 @@ class LocationAndTime extends Component {
           </select>
         </div>
         <div>
-          <label for="time">
+          <label htmlFor="time">
             <img src={time} alt="time" />
           </label>
           <select id="time" className="dropdown">
