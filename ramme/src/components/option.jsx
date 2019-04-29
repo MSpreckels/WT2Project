@@ -15,5 +15,12 @@ class Option extends Component {
     );
   }
 }
+/*
+        <Logo
+          onClick={() => this.setState({ rotate: true })}
+          onAnimationEnd={() => this.setState({ rotate: false })}
+          className={rotate ? "rotate" : ""}
+        />
+        */
 
 export default Option;
