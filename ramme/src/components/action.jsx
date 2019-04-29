@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import RamButton from "./rambutton";
+import LocationAndTime from "./locationAndTime";
 
 class Action extends Component {
     state = {};
     render() {
-        return <RamButton onButtonClick={this.props.onButtonClick} />;
+        return <div className="actionContainer">{this.props.hasParty ? <LocationAndTime /> : <RamButton onButtonClick={this.props.onButtonClick} buttonState={this.props.buttonState} />}</div>;
     }
 }
 
