@@ -31,7 +31,3 @@
     transform: rotate(360deg);
   }
 }
-
-.rotate {
-  animation: App-logo-spin 0.5 1s ease-in-out;
-}
