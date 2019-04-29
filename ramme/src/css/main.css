@@ -1,3 +1,7 @@
+:root {
+  --locationAndTimeIconElementLength: 32px;
+}
+
 .actionContainer {
   padding: 0px;
   margin-top: 30px;
@@ -42,7 +46,7 @@
   background-size: 100%;
 
   filter: drop-shadow(0px 0px 4px #58bb81);
-
+  animation: ramButton-loading-spin 4s infinite linear;
   -webkit-animation: ramButton-loading-spin 4s infinite linear;
 }
 
@@ -77,16 +81,14 @@
 }
 
 .locationAndTime > div {
-  width: calc(75% + 29px);
+  width: calc(75% + var(--locationAndTimeIconElementLength));
   margin: auto;
   margin-bottom: 10px;
-  transform: translateX(-14.5px);
-  -moz-transform: translateX(-14.5px);
-  -webkit-transform: translateX(-14.5px);
+  transform: translateX(-16px);
 }
 
 .locationAndTime > div > label {
-  margin-right: 5px;
+  margin-right: 8px;
   float: left;
 }
 
@@ -108,7 +110,7 @@
   outline: none;
   display: inline-block;
   height: 24px;
-  width: calc(100% - 29px);
+  width: calc(100% - var(--locationAndTimeIconElementLength));
   font-size: 15px;
 }
 
@@ -131,6 +133,14 @@
   background-color: white;
   border: none;
   margin: 0;
+}
+/*Firefox list fix, should be done different in future*/
+@-moz-document url-prefix() {
+  .partyList > li > div {
+    margin: 0;
+    display: list-item;
+    list-style: none outside url("../images/empty-firefox-list-fix.svg");
+  }
 }
 
 .partyList > li:hover {
