@@ -6,7 +6,7 @@ import "../css/main.css";
 
 class Main extends Component {
   state = {
-    activity: 1
+    activity: 0
   };
 
   onButtonClick = () => {

@@ -26,39 +26,37 @@
   outline: 0;
 }
 
+.locationAndTime > div {
+  width: calc(75% + 29px);
+  margin: auto;
+  margin-bottom: 10px;
+  transform: translateX(-14.5px);
+}
+
+.locationAndTime > div > label {
+  margin-right: 5px;
+  float: left;
+}
+
+.locationAndTime > div > label > img {
+  margin: 0;
+  display: inline-block;
+}
 .dropdown {
   color: #076d00;
   background-color: white;
   border-radius: 10px;
   text-align: center;
   box-sizing: border-box;
-  width: 100%;
   border: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  height: 24px;
   text-align-last: center;
   outline: none;
-  margin: 0;
-}
-
-.dropdownList {
-  color: #076d00;
-  text-align: center;
-  width: 75%;
-  padding: 0;
-}
-
-.dropdownList > li {
-  border: none;
-  margin: 0;
-}
-.dropdownList > li:first-child {
-  list-style-image: url("../images/location-24px.svg");
-}
-.dropdownList > li:last-child {
-  list-style-image: url("../images/time-24px.svg");
+  display: inline-block;
+  height: 24px;
+  width: calc(100% - 29px);
 }
 
 .catchphrase {

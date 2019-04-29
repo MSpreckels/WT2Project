@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import location from "../images/location-24px.svg";
+import time from "../images/time-24px.svg";
 
 class LocationAndTime extends Component {
   state = {
@@ -13,27 +15,31 @@ class LocationAndTime extends Component {
 
   render() {
     return (
-      <div className="">
-        <ul className="dropdownList center">
-          <li>
-            <select className="dropdown">
-              {this.state.locations.map(location => (
-                <option key={location.key} value={location.key}>
-                  {location.value}
-                </option>
-              ))}
-            </select>
-          </li>
-          <li>
-            <select className="dropdown">
-              <option value="1100">11.00 Uhr</option>
-              <option value="1130">11.30 Uhr</option>
-              <option value="1200">12.00 Uhr</option>
-              <option value="1230">12.30 Uhr</option>
-            </select>
-          </li>
-        </ul>
-      </div>
+      <form className="locationAndTime">
+        <div>
+          <label for="location">
+            <img src={location} alt="location" className="" />
+          </label>
+          <select id="location" className="dropdown">
+            {this.state.locations.map(location => (
+              <option key={location.key} value={location.key}>
+                {location.value}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label for="time">
+            <img src={time} alt="time" />
+          </label>
+          <select id="time" className="dropdown">
+            <option value="1100">11.00 Uhr</option>
+            <option value="1130">11.30 Uhr</option>
+            <option value="1200">12.00 Uhr</option>
+            <option value="1230">12.30 Uhr</option>
+          </select>
+        </div>
+      </form>
     );
   }
 }
