@@ -1,9 +1,16 @@
 import React, { Component } from "react";
+import Chat from "./chat";
+import Info from "./info";
 
 class Footer extends Component {
     state = {};
     render() {
-        return <h1>Footer</h1>;
+        return(
+            <footer>
+                <Chat />
+                <Info />
+            </footer>
+        );
     }
 }
 
