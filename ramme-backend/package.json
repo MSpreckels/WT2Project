@@ -1,0 +1,15 @@
+{
+  "name": "ramme-backend",
+  "version": "1.0.0",
+  "description": "Backend of our WT2 Web-App project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "nodemon"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.0"
+  }
+}
