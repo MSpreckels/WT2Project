@@ -5,7 +5,7 @@ import LocationAndTime from "./locationAndTime";
 class Action extends Component {
     state = {};
     render() {
-        return <div className="actionContainer">{this.props.hasParty ? <LocationAndTime /> : <RamButton onButtonClick={this.props.onButtonClick} buttonState={this.props.buttonState} />}</div>;
+        return <div className="actionContainer">{this.props.hasParty ? <LocationAndTime readonly={true} /> : <RamButton onButtonClick={this.props.onButtonClick} buttonState={this.props.buttonState} />}</div>;
     }
 }
 

@@ -5,10 +5,10 @@ import Info from "./info";
 class Footer extends Component {
     state = {};
     render() {
-        return(
+        return (
             <footer>
                 <Chat />
-                <Info />
+                {/* <Info /> */}
             </footer>
         );
     }
