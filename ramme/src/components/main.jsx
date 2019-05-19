@@ -7,6 +7,7 @@ import "../css/main.css";
 class Main extends Component {
     state = {
         templatedata: null,
+        names: null,
         activity: 0,
         hasParty: false
     };
@@ -44,6 +45,18 @@ class Main extends Component {
         });
 
         request.send();
+
+        //read names.json
+        let requestNames = new XMLHttpRequest();
+        requestNames.open("GET", "./names.json", true);
+
+        requestNames.addEventListener("load", () => {
+            if (requestNames.status >= 200 && requestNames.status < 300) {
+                this.setState({ names: JSON.parse(requestNames.response) });
+            }
+        });
+
+        requestNames.send();
     }
 
     render() {
