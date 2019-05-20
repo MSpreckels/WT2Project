@@ -48,14 +48,14 @@ class Main extends Component {
 
         //read names.json
         let requestNames = new XMLHttpRequest();
-        requestNames.open("GET", "./names.json", true);
-
+        //requestNames.open("GET", "http://localhost:5000/api/session", true);
+        requestNames.open("GET", "http://81.169.194.105:5000/api/session", true);
+        requestNames.withCredentials = true;
         requestNames.addEventListener("load", () => {
             if (requestNames.status >= 200 && requestNames.status < 300) {
-                this.setState({ names: JSON.parse(requestNames.response) });
+                console.log(requestNames);
             }
         });
-
         requestNames.send();
     }
 

@@ -2,8 +2,23 @@ const express = require("express");
 const temmplateData = require("./ressources/templatedata.json");
 const session = require("express-session");
 const sessionManager = require("./modules/sessionManager");
+const cors = require("cors");
+
+var whitelist = ["http://localhost:3000", "http://m-spreckels.net"];
+var corsOptions = {
+    origin: function(origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true
+};
 
 const app = express();
+
+app.use(cors(corsOptions));
 
 app.use(
     session({
