@@ -1,3 +1,9 @@
 {
-  "sessions": []
+  "sessions": [
+    {
+      "id": "Uvug3zzcdtSC8KNIZXfawdgWd1eYv4H6",
+      "securityToken": "1fb9cbbf-75bf-487a-bf87-44c75c329e94",
+      "name": "Hailey"
+    }
+  ]
 }
