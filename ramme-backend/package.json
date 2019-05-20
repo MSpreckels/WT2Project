@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "nodemon"
+    "test": "nodemon -i *.json"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.0",
     "express-session": "^1.16.1",
+    "nodemon": "^1.19.0",
     "uuid": "^3.3.2"
   }
 }

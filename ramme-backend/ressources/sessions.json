@@ -1,9 +1,3 @@
 {
-  "sessions": [
-    {
-      "id": "3NqElJlktkbfAzaHL86TNR3gKqixiQEe",
-      "securityToken": "5a4cd6b9-9c9c-450f-bca2-272b72c52116",
-      "name": "test"
-    }
-  ]
+  "sessions": []
 }
