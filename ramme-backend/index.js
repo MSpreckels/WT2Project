@@ -6,30 +6,30 @@ const sessionManager = require("./modules/sessionManager");
 const app = express();
 
 app.use(
-  session({
-    secret: "Shh, its a secret!",
-    resave: false,
-    saveUninitialized: true
-  })
+    session({
+        secret: "Shh, its a secret!",
+        resave: false,
+        saveUninitialized: true
+    })
 );
 
 app.get("/", (req, res) => {
-  console.log(req.hostname);
-  res.redirect("http://" + req.hostname + ":3000");
+    console.log(req.hostname);
+    res.redirect("http://" + req.hostname + ":5000");
 });
 
 app.get("/api/chat", (req, res) => {
-  res.send("Platzhalter für chat");
+    res.send("Platzhalter für chat");
 });
 
 app.get("/api/session", sessionManager.getSession);
 
 app.get("/api/locations", (req, res) => {
-  res.send(temmplateData.locations);
+    res.send(temmplateData.locations);
 });
 
 app.get("/api/catchphrases", (req, res) => {
-  res.send(temmplateData.catchphrases);
+    res.send(temmplateData.catchphrases);
 });
 
 const port = process.env.PORT || 5000;

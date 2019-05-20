@@ -1,6 +1,8 @@
 const fs = require("fs");
 const uuid = require("uuid/v4");
 
+const randomNameGenerator = require("./randomName");
+
 function getSession(req, res) {
   fs.readFile("./ressources/sessions.json", (err, data) => {
     let sessions = JSON.parse(data).sessions;
