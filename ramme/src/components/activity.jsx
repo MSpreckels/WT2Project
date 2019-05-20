@@ -2,11 +2,26 @@ import React, { Component } from "react";
 import PartyList from "./partyList";
 import LocationAndTime from "./locationAndTime";
 class Activity extends Component {
-    state = {};
+  state = {};
 
-    render() {
-        return <section id="activity">{this.props.activity === 0 ? this.props.data != null ? <LocationAndTime readonly={false} locations={this.props.data.locations} /> : "Loading.." : <PartyList users={this.props.data.users} />}</section>;
-    }
+  render() {
+    return (
+      <section id="activity">
+        {this.props.activity === 0 ? (
+          this.props.data != null ? (
+            <LocationAndTime
+              readonly={false}
+              locations={this.props.data.locations}
+            />
+          ) : (
+            "Loading.."
+          )
+        ) : (
+          <PartyList users={this.props.data.users} />
+        )}
+      </section>
+    );
+  }
 }
 
 export default Activity;

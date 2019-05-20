@@ -1,7 +1,22 @@
 {
-    "catchphrases": ["random access meal", "Einfach mal über was anderes quatschen?", "Love at first meal ?"],
+  "catchphrases": [
+    "random access meal",
+    "Einfach mal über was anderes quatschen?",
+    "Love at first meal?"
+  ],
 
-    "locations": ["Mensa Hochschule Bochum", "Mensa RUB", "Q-West", "Bistro RUB"],
+  "locations": ["Mensa Hochschule Bochum", "Mensa RUB", "Q-West", "Bistro RUB"],
 
-    "users": ["Jeff Lebowski", "App User", "Rosa Luxemburg", "Paul Rotthues", "Fabian Ritter", "Fabian Buedding", "Marie Roß-Loeber", "Marco Spreckels", "Gustav Gans", "Johannes Koenig"]
+  "users": [
+    "Jeff Lebowski",
+    "App User",
+    "Rosa Luxemburg",
+    "Paul Rotthues",
+    "Fabian Ritter",
+    "Fabian Buedding",
+    "Marie Roß-Loeber",
+    "Marco Spreckels",
+    "Gustav Gans",
+    "Johannes Koenig"
+  ]
 }
