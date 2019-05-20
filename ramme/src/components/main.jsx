@@ -46,6 +46,7 @@ class Main extends Component {
 
     request.send();
 
+<<<<<<< HEAD
     //read names.json
     let requestNames = new XMLHttpRequest();
     requestNames.open("GET", "./names.json", true);
@@ -58,6 +59,20 @@ class Main extends Component {
 
     requestNames.send();
   }
+=======
+        //read names.json
+        let requestNames = new XMLHttpRequest();
+        //requestNames.open("GET", "http://localhost:5000/api/session", true);
+        requestNames.open("GET", "http://81.169.194.105:5000/api/session", true);
+        requestNames.withCredentials = true;
+        requestNames.addEventListener("load", () => {
+            if (requestNames.status >= 200 && requestNames.status < 300) {
+                console.log(requestNames);
+            }
+        });
+        requestNames.send();
+    }
+>>>>>>> dff1078cd34f699e6501f03f742aa9d1f9b58baf
 
   render() {
     return (
