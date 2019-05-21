@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import location from "../images/location-24px.svg";
 import time from "../images/time-24px.svg";
+import { TimePicker } from 'antd';
+import moment from 'moment';
 
 class LocationAndTime extends Component {
   state = {
-    time
   };
 
   componentDidMount() {}
@@ -49,17 +50,12 @@ function getLocationRender(props) {
 }
 
 function getTimeRender(props) {
-  var d = new Date();
-  d.setMinutes(Math.floor(d.getMinutes() / 10) * 10 + 20);
-  d = new Date(d);
-  const h = d.getHours();
-  const m = d.getMinutes();
-  const time = (h > 9 ? "" : "0") + h + "." + (m > 9 ? "" : "0") + m;
-  return (
-    <div id="time" className="dropdown">
-      <option value={time.replace(".", "")}>{time}</option>
-    </div>
-  );
+ const format = 'HH:mm';
+ if(props.readonly) {
+    return <TimePicker className="dropdown" defaultValue={moment(props.meetingTime,format)} minuteStep={15} format={format} disabled/>;
+ } else {
+    return <TimePicker className="dropdown" defaultValue={moment(moment(),format)} minuteStep={15} format={format}/>
+ }
 }
 
 export default LocationAndTime;

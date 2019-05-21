@@ -9,6 +9,7 @@ class Main extends Component {
     templatedata: null,
     names: null,
     activity: 0,
+    meetingTime: null,
     hasParty: false
   };
 
@@ -18,6 +19,11 @@ class Main extends Component {
     if (lastButtonState === 0) this.searchForAvailableGroup(); //if last button state was start then we are looking for a party now
 
     this.setState({ activity: activity });
+  };
+
+  onTimeChange = (time, timeString) => {
+    console.log(time, timeString);
+    this.setState({meetingTime: timeString});
   };
 
   searchForAvailableGroup() {
@@ -73,10 +79,12 @@ class Main extends Component {
           onButtonClick={this.onButtonClick}
           buttonState={this.state.activity}
           hasParty={this.state.hasParty}
+          meetingTime={this.state.meetingTime}
         />
         <Activity
           activity={this.state.activity}
           data={this.state.templatedata}
+          onTimeChange={this.onTimeChange}
         />
       </main>
     );
