@@ -47,11 +47,13 @@ class Main extends Component {
     request.send();
 
     let am = new ApiManager("http://localhost:5000/api/");
-    am.initialize()
+    am.initialize(() =>
+      am
+        .get("locations")
+        .then(res => this.setState({ locations: res }))
+        .catch(console.log)
+    )
       .then(res => this.setState({ res }))
-      .catch(console.log);
-    am.get("locations")
-      .then(res => this.setState({ locations: res }))
       .catch(console.log);
   }
 
