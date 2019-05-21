@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Action from "./action";
 import Activity from "./activity";
 import Text from "./text";
+import ApiManager from "../js/ApiManager";
 import "../css/main.css";
 
 class Main extends Component {
@@ -34,7 +35,6 @@ class Main extends Component {
   };
 
   componentDidMount() {
-    let main = this;
     let request = new XMLHttpRequest();
     request.open("GET", "./templatedata.json", true);
 
@@ -46,17 +46,13 @@ class Main extends Component {
 
     request.send();
 
-    //read names.json
-    let requestNames = new XMLHttpRequest();
-    //requestNames.open("GET", "http://localhost:5000/api/session", true);
-    requestNames.open("GET", "http://81.169.194.105:5000/api/session", true);
-    requestNames.withCredentials = true;
-    requestNames.addEventListener("load", () => {
-      if (requestNames.status >= 200 && requestNames.status < 300) {
-        console.log(requestNames);
-      }
-    });
-    requestNames.send();
+    let am = new ApiManager("http://localhost:5000/api/");
+    am.initialize()
+      .then(res => this.setState({ res }))
+      .catch(console.log);
+    am.get("locations")
+      .then(res => this.setState({ locations: res }))
+      .catch(console.log);
   }
 
   render() {
