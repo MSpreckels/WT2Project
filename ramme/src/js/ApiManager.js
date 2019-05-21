@@ -10,7 +10,7 @@ class ApiManager {
     method: "GET",
     credentials: "include"
   };
-  isInitialized = false;
+  initialized = false;
   url = "";
   /**
    * Creates an instance of ApiManager
@@ -22,24 +22,28 @@ class ApiManager {
     if (!url.endsWith("/")) url += "/";
     this.url = url;
   }
-
+  isInitialized() {
+    return this.initialized;
+  }
   /**
    * Initializes an ApiManager object
    *
    * @async
-   * @returns {promise} response as promise
+   * @returns {promise} session as promise
    * @throws {error}
    */
-  async initialize() {
-    this.isInitialized = true;
+  async initialize(callback) {
     try {
       const resp = await fetch(this.url + "session", this.params);
       const json = await resp.json();
+      this.initialized = true;
+      callback();
       return json;
     } catch (error) {
       throw error;
     }
   }
+
   /**
    * makes an API GET request
    *
@@ -51,7 +55,7 @@ class ApiManager {
   async get(endpoint) {
     if (endpoint.startsWith("/")) endpoint = endpoint.substring(1);
     this.params.method = "GET";
-    if (!this.isInitialized) throw new Error("ApiManager not initialized");
+    if (!this.initialized) throw new Error("ApiManager not initialized");
     try {
       const resp = await fetch(this.url + endpoint, this.params);
       const json = await resp.json();
@@ -71,7 +75,7 @@ class ApiManager {
   async post(endpoint) {
     if (endpoint.startsWith("/")) endpoint = endpoint.substring(1);
     this.params.method = "POST";
-    if (!this.isInitialized) throw new Error("ApiManager not initialized");
+    if (!this.initialized) throw new Error("ApiManager not initialized");
     try {
       const resp = await fetch(this.url + endpoint, this.params);
       const json = await resp.json();
