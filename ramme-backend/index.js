@@ -1,7 +1,9 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const temmplateData = require("./ressources/templatedata.json");
 const session = require("express-session");
 const sessionManager = require("./modules/sessionManager");
+const chatManager = require("./modules/chatManager");
 const cors = require("cors");
 
 var whitelist = ["http://localhost:3000", "http://m-spreckels.net"];
@@ -28,14 +30,16 @@ app.use(
     })
 );
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
 app.get("/", (req, res) => {
     console.log(req.hostname);
     res.redirect("http://" + req.hostname + ":5000");
 });
 
-app.get("/api/chat", (req, res) => {
-    res.send("Platzhalter für chat");
-});
+app.get("/api/messages", chatManager.getMessages);
+app.post("/api/messages", chatManager.sendMessage);
 
 app.get("/api/session", sessionManager.getSession);
 
