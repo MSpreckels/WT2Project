@@ -11,13 +11,13 @@ class Chat extends Component {
 
     componentDidMount() {
         let am = new ApiManager("http://localhost:5000/api");
-        setInterval(() => {
+        /*setInterval(() => {
             am.initialize(() => {
                 am.get("messages")
                     .then(res => this.setState({ res }))
                     .catch(console.log);
             }).catch(console.log);
-        }, 1000);
+        }, 1000);*/
     }
 
     render() {
