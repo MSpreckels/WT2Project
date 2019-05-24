@@ -24,7 +24,6 @@ class Chat extends Component {
                     </button>
                 }
                 position="top center"
-                closeOnDocumentClick
             >
                 <ChatWindow messages={this.state.res != null ? this.state.res.messages : []} onSendMessage={this.sendMessage} />
             </Popup>

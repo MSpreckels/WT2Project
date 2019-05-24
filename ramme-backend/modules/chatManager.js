@@ -11,7 +11,7 @@ function getMessages(req, res) {
     Message.find({}, (err, messages) => {
         if (err) console.log(err);
 
-        res.send({ messages: messages.map(x => [x.name, x.message]) });
+        res.send({ messages: messages.map(x => [x.name, x.message, x.sessionid === req.session.id]) });
     });
 }
 

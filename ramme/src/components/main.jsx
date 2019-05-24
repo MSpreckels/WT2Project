@@ -43,13 +43,12 @@ class Main extends Component {
                 this.setState({ templatedata: JSON.parse(request.response) });
             }
         });
-
         request.send();
 
         let am = new ApiManager("http://localhost:5000/api");
         am.initialize(() => {
             am.get("locations")
-                .then(res => console.log(res))
+                .then(res => {})
                 .catch(console.log);
         })
             .then(res => this.setState({ res }))
