@@ -20,7 +20,7 @@ function sendMessage(req, res) {
 
     let message = new Message({ sessionid: req.session.id, name: req.session.name, message: req.body.message });
     message.save(err => {
-        console.log(message);
+        res.send({ result: "OK" });
     });
 }
 

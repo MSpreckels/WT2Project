@@ -4,20 +4,14 @@ import ChatWindow from "../components/chatwindow";
 import chat from "../images/baseline-chat-24px.svg";
 import ApiManager from "../js/ApiManager";
 
+const am = new ApiManager("http://localhost:5000/api");
 class Chat extends Component {
     state = {
         res: null
     };
 
     componentDidMount() {
-        let am = new ApiManager("http://localhost:5000/api");
-        /*setInterval(() => {
-            am.initialize(() => {
-                am.get("messages")
-                    .then(res => this.setState({ res }))
-                    .catch(console.log);
-            }).catch(console.log);
-        }, 1000);*/
+        this.FetchAllMessageFromServer();
     }
 
     render() {
@@ -37,17 +31,21 @@ class Chat extends Component {
         );
     }
 
-    setMessage = message => {
-        console.log(message);
-    };
-
     sendMessage = msg => {
         //console.log(msg);
         let am = new ApiManager("http://localhost:5000/api");
 
         am.initialize(() => {
             am.post("messages", msg)
-                .then(res => console.log(res))
+                .then(res => (res.result === "OK" ? this.FetchAllMessageFromServer() : console.log("Error")))
+                .catch(console.log);
+        }).catch(console.log);
+    };
+
+    FetchAllMessageFromServer = () => {
+        am.initialize(() => {
+            am.get("messages")
+                .then(res => this.setState({ res }))
                 .catch(console.log);
         }).catch(console.log);
     };
