@@ -43,7 +43,7 @@ app.use(
     }
   })
 );
-
+app.use(sessionManager.initializeSession);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -54,8 +54,6 @@ app.get("/", (req, res) => {
 
 app.get("/api/messages", chatManager.getMessages);
 app.post("/api/messages", chatManager.sendMessage);
-
-app.get("/api/session", sessionManager.getSession);
 
 app.get("/api/locations", (req, res) => {
   res.send(temmplateData.locations);
