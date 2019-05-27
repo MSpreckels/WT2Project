@@ -6,48 +6,56 @@ import ApiManager from "../js/ApiManager";
 
 const am = new ApiManager("http://localhost:5000/api");
 class Chat extends Component {
-    state = {
-        res: null
-    };
+  state = {
+    res: null
+  };
 
-    componentDidMount() {
-        this.FetchAllMessageFromServer();
-    }
+  componentDidMount() {
+    let am = new ApiManager("http://localhost:5000/api");
+    /*setInterval(() => {
+            am.initialize(() => {
+                am.get("messages")
+                    .then(res => this.setState({ res }))
+                    .catch(console.log);
+            }).catch(console.log);
+        }, 1000);*/
+  }
 
-    render() {
-        //return <img src={chat} alt="Chat" className="center" />;
-        return (
-            <Popup
-                trigger={
-                    <button className="center" style={{ border: "none", backgroundColor: "transparent" }}>
-                        <img src={chat} alt="Chat" className="center" />
-                    </button>
-                }
-                position="top center"
-            >
-                <ChatWindow messages={this.state.res != null ? this.state.res.messages : []} onSendMessage={this.sendMessage} />
-            </Popup>
-        );
-    }
+  render() {
+    //return <img src={chat} alt="Chat" className="center" />;
+    return (
+      <Popup
+        trigger={
+          <button
+            className="center"
+            style={{ border: "none", backgroundColor: "transparent" }}
+          >
+            <img src={chat} alt="Chat" className="center" />
+          </button>
+        }
+        position="top center"
+        closeOnDocumentClick
+      >
+        <ChatWindow
+          messages={this.state.res != null ? this.state.res.messages : []}
+          onSendMessage={this.sendMessage}
+        />
+      </Popup>
+    );
+  }
 
-    sendMessage = msg => {
-        //console.log(msg);
-        let am = new ApiManager("http://localhost:5000/api");
+  setMessage = message => {
+    console.log(message);
+  };
 
-        am.initialize(() => {
-            am.post("messages", msg)
-                .then(res => (res.result === "OK" ? this.FetchAllMessageFromServer() : console.log("Error")))
-                .catch(console.log);
-        }).catch(console.log);
-    };
+  sendMessage = msg => {
+    //console.log(msg);
+    let am = new ApiManager("http://localhost:5000/api");
 
-    FetchAllMessageFromServer = () => {
-        am.initialize(() => {
-            am.get("messages")
-                .then(res => this.setState({ res }))
-                .catch(console.log);
-        }).catch(console.log);
-    };
+    am.post("messages", msg)
+      .then(res => console.log(res))
+      .catch(console.log);
+  };
 }
 
 export default Chat;
