@@ -14,8 +14,7 @@ class Main extends Component {
     hasParty: false,
     locations: [],
     meetingTime: 0,
-    meetingLocation: "Mensa Hochschule Bochum",
-    hasParty: false
+    meetingLocation: "Mensa Hochschule Bochum"
   };
 
   onButtonClick = lastButtonState => {

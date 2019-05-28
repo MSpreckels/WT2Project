@@ -1,6 +1,9 @@
 :root {
   --locationAndTimeIconElementLength: 32px;
 }
+.logo {
+  width: calc(100% - calc(var(--locationAndTimeIconElementLength) * 2));
+}
 .option {
   text-align: left;
 }
@@ -103,34 +106,32 @@
   display: inline-block;
 }
 .dropdown {
-  color: #076d00;
+  background: url("../images/arrow.svg") no-repeat white;
+  background-position: right;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  outline: none;
+  width: calc(100% - var(--locationAndTimeIconElementLength));
+}
+
+.widthWithIcon {
+  width: calc(100% - var(--locationAndTimeIconElementLength)) !important;
+}
+.roundedBox {
+  width: 100%;
   background-color: white;
+  color: #076d00;
   border-radius: 10px;
   text-align: center;
   box-sizing: border-box;
   border: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
   text-align-last: center;
-  outline: none;
   display: inline-block;
   height: 24px;
-  width: calc(100% - var(--locationAndTimeIconElementLength));
   font-size: 15px;
-}
-
-.locationSelector {
-  position: relative;
-}
-
-.locationSelector::before {
-  content: "\f107";
-  font-size: 20px;
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  color: #fff;
 }
 
 .catchphrase {
@@ -175,19 +176,19 @@
   border-bottom-right-radius: 10px;
 }
 
-.timeRadioForm input[type='radio'] {
+.timeRadioForm input[type="radio"] {
   display: none;
 }
 
-.timeLabel { 
-  background: rgb(255, 255, 255); 
+.timeLabel {
+  background: rgb(255, 255, 255);
   transition: 0.5s;
 }
 
-.timeRadioForm input:checked+.timeLabel { 
-  background: rgb(51, 187, 16); 
-  color: white; 
-  transition: 0.5s; 
+.timeRadioForm input:checked + .timeLabel {
+  background: rgb(51, 187, 16);
+  color: white;
+  transition: 0.5s;
 }
 
 .timeLabel {
