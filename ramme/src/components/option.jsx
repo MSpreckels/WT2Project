@@ -5,7 +5,7 @@ class Option extends Component {
   state = { rotate: false };
   render() {
     return (
-      <div className="partyList">
+      <div className="option">
         <Logo
           onClick={() => this.setState({ rotate: true })}
           onAnimationEnd={() => this.setState({ rotate: false })}

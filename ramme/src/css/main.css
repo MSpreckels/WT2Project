@@ -1,7 +1,9 @@
 :root {
   --locationAndTimeIconElementLength: 32px;
 }
-
+.option {
+  text-align: left;
+}
 .actionContainer {
   padding: 0px;
   margin-top: 30px;
@@ -85,7 +87,7 @@
 }
 
 .locationAndTime > div {
-  width: calc(75% + var(--locationAndTimeIconElementLength));
+  width: calc(100% - var(--locationAndTimeIconElementLength));
   margin: auto;
   margin-bottom: 10px;
   transform: translateX(-16px);
@@ -107,9 +109,9 @@
   text-align: center;
   box-sizing: border-box;
   border: none;
-  /*-webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;*/
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   text-align-last: center;
   outline: none;
   display: inline-block;
