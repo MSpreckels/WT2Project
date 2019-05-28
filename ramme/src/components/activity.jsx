@@ -12,6 +12,8 @@ class Activity extends Component {
             <LocationAndTime
               readonly={false}
               locations={this.props.data.locations}
+              onTimeChange={this.props.onTimeChange}
+              onLocationChange={this.props.onLocationChange}
             />
           ) : (
             "Loading.."

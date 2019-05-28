@@ -3,13 +3,15 @@ import Action from "./action";
 import Activity from "./activity";
 import Text from "./text";
 import "../css/main.css";
+import moment from "moment";
 
 class Main extends Component {
   state = {
     templatedata: null,
     names: null,
     activity: 0,
-    meetingTime: null,
+    meetingTime: 0,
+    meetingLocation: "Mensa Hochschule Bochum",
     hasParty: false
   };
 
@@ -21,9 +23,13 @@ class Main extends Component {
     this.setState({ activity: activity });
   };
 
-  onTimeChange = (time, timeString) => {
-    console.log(time, timeString);
-    this.setState({meetingTime: timeString});
+  onTimeChange = (timeID) => {
+    console.log(timeID);
+    this.setState({meetingTime: timeID});
+  };
+  
+  onLocationChange = (event) => {
+    this.setState({meetingLocation: event.target.value});
   };
 
   searchForAvailableGroup() {
@@ -80,11 +86,13 @@ class Main extends Component {
           buttonState={this.state.activity}
           hasParty={this.state.hasParty}
           meetingTime={this.state.meetingTime}
+          meetingLocation={this.state.meetingLocation}
         />
         <Activity
           activity={this.state.activity}
           data={this.state.templatedata}
           onTimeChange={this.onTimeChange}
+          onLocationChange={this.onLocationChange}
         />
       </main>
     );
