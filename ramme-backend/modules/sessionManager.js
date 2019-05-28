@@ -23,7 +23,6 @@ const randomNameGenerator = require("./randomName");
 
 function initializeSession(req, res, next) {
   if (!req.session.securityToken && !req.session.name) {
-    console.log("initializer gecalled ");
     req.session.securityToken = uuid();
     req.session.name = randomNameGenerator();
   }

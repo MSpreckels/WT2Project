@@ -48,7 +48,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-  console.log(req.hostname);
   res.redirect("http://" + req.hostname + ":5000");
 });
 

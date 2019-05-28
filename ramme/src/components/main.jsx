@@ -11,6 +11,8 @@ class Main extends Component {
     templatedata: null,
     names: null,
     activity: 0,
+    hasParty: false,
+    locations: [],
     meetingTime: 0,
     meetingLocation: "Mensa Hochschule Bochum",
     hasParty: false
@@ -24,13 +26,13 @@ class Main extends Component {
     this.setState({ activity: activity });
   };
 
-  onTimeChange = (timeID) => {
+  onTimeChange = timeID => {
     console.log(timeID);
-    this.setState({meetingTime: timeID});
+    this.setState({ meetingTime: timeID });
   };
-  
-  onLocationChange = (event) => {
-    this.setState({meetingLocation: event.target.value});
+
+  onLocationChange = event => {
+    this.setState({ meetingLocation: event.target.value });
   };
 
   searchForAvailableGroup() {
@@ -59,7 +61,7 @@ class Main extends Component {
     request.send();
 
     let am = new ApiManager("http://localhost:5000/api");
-    am.get("locations").then(console.log);
+    am.get("locations").then(res => this.setState({ locations: res }));
   }
 
   render() {
@@ -82,6 +84,7 @@ class Main extends Component {
         <Activity
           activity={this.state.activity}
           data={this.state.templatedata}
+          locations={this.state.locations}
           onTimeChange={this.onTimeChange}
           onLocationChange={this.onLocationChange}
         />
