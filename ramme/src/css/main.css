@@ -120,6 +120,19 @@
   font-size: 15px;
 }
 
+.locationSelector {
+  position: relative;
+}
+
+.locationSelector::before {
+  content: "\f107";
+  font-size: 20px;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  color: #fff;
+}
+
 .catchphrase {
   text-align: center;
   color: #076d00;
@@ -178,8 +191,8 @@
 }
 
 .timeLabel {
-  width: 15%;
-  margin: 0 10px;
+  width: 20%;
+  margin: 0 2px;
 }
 
 main {
