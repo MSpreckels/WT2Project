@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import location from "../images/location-24px.svg";
 import time from "../images/time-24px.svg";
-import moment, { now } from 'moment';
+import moment from 'moment';
 
 class LocationAndTime extends Component {
   state = {
@@ -62,7 +62,7 @@ function getTimeRender(props) {
     //return <TimePicker className="dropdown timepickDisabled" defaultValue={moment(props.meetingTime, format)} minuteStep={15} format={format} disabled/>;
   } else {
     return (
-    <form className="timeRadioForm dropdown">
+    <div className="timeRadioForm dropdown">
       <input type="radio" id="r1" name="selector" onClick={() => props.onTimeChange(0)} defaultChecked/>
         <label className="dropdown timeLabel" htmlFor="r1">Jetzt</label>
       <input type="radio" id="r2" name="selector" onClick={() => props.onTimeChange(5)}/>
@@ -71,7 +71,7 @@ function getTimeRender(props) {
         <label className="dropdown timeLabel" htmlFor="r3">15 min</label>
       <input type="radio" id="r4" name="selector" onClick={() => props.onTimeChange(30)}/>
         <label className="dropdown timeLabel" htmlFor="r4">30 min</label>
-    </form>
+    </div>
     );
     //return <TimePicker onChange={props.onTimeChange} className="dropdown" defaultValue={moment(moment(), format)} minuteStep={15} format={format} />
   }
