@@ -10,7 +10,8 @@ class Main extends Component {
     templatedata: null,
     names: null,
     activity: 0,
-    hasParty: false
+    hasParty: false,
+    locations: []
   };
 
   onButtonClick = lastButtonState => {
@@ -47,7 +48,7 @@ class Main extends Component {
     request.send();
 
     let am = new ApiManager("http://localhost:5000/api");
-    am.get("locations").then(console.log);
+    am.get("locations").then(res => this.setState({ locations: res }));
   }
 
   render() {
@@ -68,6 +69,7 @@ class Main extends Component {
         <Activity
           activity={this.state.activity}
           data={this.state.templatedata}
+          locations={this.state.locations}
         />
       </main>
     );
