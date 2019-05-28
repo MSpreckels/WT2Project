@@ -3,15 +3,12 @@ import Popup from "reactjs-popup";
 import ChatWindow from "../components/chatwindow";
 import chat from "../images/baseline-chat-24px.svg";
 import ApiManager from "../js/ApiManager";
-
-const am = new ApiManager("http://localhost:5000/api");
 class Chat extends Component {
   state = {
     res: null
   };
 
   componentDidMount() {
-    let am = new ApiManager("http://localhost:5000/api");
     /*setInterval(() => {
             am.initialize(() => {
                 am.get("messages")
