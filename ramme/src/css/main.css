@@ -162,6 +162,26 @@
   border-bottom-right-radius: 10px;
 }
 
+.timeRadioForm input[type='radio'] {
+  display: none;
+}
+
+.timeLabel { 
+  background: rgb(255, 255, 255); 
+  transition: 0.5s;
+}
+
+.timeRadioForm input:checked+.timeLabel { 
+  background: rgb(51, 187, 16); 
+  color: white; 
+  transition: 0.5s; 
+}
+
+.timeLabel {
+  width: 15%;
+  margin: 0 10px;
+}
+
 main {
   width: 100%;
 }

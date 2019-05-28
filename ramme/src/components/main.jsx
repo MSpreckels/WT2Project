@@ -4,6 +4,7 @@ import Activity from "./activity";
 import Text from "./text";
 import ApiManager from "../js/ApiManager";
 import "../css/main.css";
+import moment from "moment";
 
 class Main extends Component {
   state = {
@@ -11,7 +12,10 @@ class Main extends Component {
     names: null,
     activity: 0,
     hasParty: false,
-    locations: []
+    locations: [],
+    meetingTime: 0,
+    meetingLocation: "Mensa Hochschule Bochum",
+    hasParty: false
   };
 
   onButtonClick = lastButtonState => {
@@ -20,6 +24,15 @@ class Main extends Component {
     if (lastButtonState === 0) this.searchForAvailableGroup(); //if last button state was start then we are looking for a party now
 
     this.setState({ activity: activity });
+  };
+
+  onTimeChange = timeID => {
+    console.log(timeID);
+    this.setState({ meetingTime: timeID });
+  };
+
+  onLocationChange = event => {
+    this.setState({ meetingLocation: event.target.value });
   };
 
   searchForAvailableGroup() {
@@ -65,11 +78,15 @@ class Main extends Component {
           onButtonClick={this.onButtonClick}
           buttonState={this.state.activity}
           hasParty={this.state.hasParty}
+          meetingTime={this.state.meetingTime}
+          meetingLocation={this.state.meetingLocation}
         />
         <Activity
           activity={this.state.activity}
           data={this.state.templatedata}
           locations={this.state.locations}
+          onTimeChange={this.onTimeChange}
+          onLocationChange={this.onLocationChange}
         />
       </main>
     );
