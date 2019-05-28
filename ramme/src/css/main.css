@@ -130,7 +130,7 @@
 .partyList {
   color: #076d00;
   text-align: center;
-  width: 75%;
+  width: calc(100% - calc(var(--locationAndTimeIconElementLength) * 2));
   padding: 0;
   list-style: none outside url("../images/baseline-person_pin-24px.svg");
 }
