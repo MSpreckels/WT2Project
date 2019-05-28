@@ -66,11 +66,11 @@ function getTimeRender(props) {
       <input type="radio" id="r1" name="selector" onClick={() => props.onTimeChange(0)} defaultChecked/>
         <label className="dropdown timeLabel" htmlFor="r1">Jetzt</label>
       <input type="radio" id="r2" name="selector" onClick={() => props.onTimeChange(5)}/>
-        <label className="dropdown timeLabel" htmlFor="r2">in 5 min</label>
+        <label className="dropdown timeLabel" htmlFor="r2">5 min</label>
       <input type="radio" id="r3" name="selector" onClick={() => props.onTimeChange(15)}/>
-        <label className="dropdown timeLabel" htmlFor="r3">in 15 min</label>
+        <label className="dropdown timeLabel" htmlFor="r3">15 min</label>
       <input type="radio" id="r4" name="selector" onClick={() => props.onTimeChange(30)}/>
-        <label className="dropdown timeLabel" htmlFor="r4">in 30 min</label>
+        <label className="dropdown timeLabel" htmlFor="r4">30 min</label>
     </form>
     );
     //return <TimePicker onChange={props.onTimeChange} className="dropdown" defaultValue={moment(moment(), format)} minuteStep={15} format={format} />
