@@ -4,7 +4,6 @@ import Activity from "./activity";
 import Text from "./text";
 import ApiManager from "../js/ApiManager";
 import "../css/main.css";
-import moment from "moment";
 
 class Main extends Component {
   state = {
