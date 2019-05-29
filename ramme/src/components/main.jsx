@@ -4,7 +4,6 @@ import Activity from "./activity";
 import Text from "./text";
 import ApiManager from "../js/ApiManager";
 import "../css/main.css";
-import moment from "moment";
 
 class Main extends Component {
   state = {
@@ -60,7 +59,7 @@ class Main extends Component {
     request.send();
 
     let am = new ApiManager("http://localhost:5000/api");
-    am.get("locations").then(res => this.setState({ locations: res }));
+    am.get("locations").then(res => this.setState({ locations: res.body }));
   }
 
   render() {

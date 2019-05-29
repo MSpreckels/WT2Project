@@ -40,7 +40,8 @@ async function sendMessage(req, res) {
       message: req.body.message
     });
     message.save(err => {
-      res.status(200).send({ message: "Message send" });
+      if (err) res.status(500).send({ message: "message could not be send " });
+      res.status(201).send({ message: "Message send" });
     });
   }
 }
