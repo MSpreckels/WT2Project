@@ -60,7 +60,7 @@ class Main extends Component {
     request.send();
 
     let am = new ApiManager("http://localhost:5000/api");
-    am.get("locations").then(res => this.setState({ locations: res }));
+    am.get("locations").then(res => this.setState({ locations: res.body }));
   }
 
   render() {

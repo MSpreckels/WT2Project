@@ -1,6 +1,8 @@
 /**
  * @author: Fabian Büdding
  * @this {ApiManager}
+ * @class
+ *
  */
 
 class ApiManager {
@@ -15,12 +17,18 @@ class ApiManager {
     if (!url.endsWith("/")) url += "/";
     this.url = url;
   }
-
+  /**
+   *
+   * @typedef {Object} response
+   * @property {string} status - The statusCode
+   * @property {string} statusText - The statusText
+   * @property {Object} body - The body with sendet object
+   */
   /**
    * makes an API GET request
    *
    * @async
-   * @returns {promise} response as promise
+   * @returns {Promise<response>} - response as promise, status, statusText and body
    * @throws {error}
    * @param {string} endpoint string with full endpoint
    */
@@ -32,8 +40,11 @@ class ApiManager {
     };
     try {
       const resp = await fetch(this.url + endpoint, params);
-      const json = await resp.json();
-      return json;
+      return {
+        status: resp.status,
+        statusText: resp.statusText,
+        body: await resp.json()
+      };
     } catch (error) {
       throw error;
     }
@@ -42,7 +53,7 @@ class ApiManager {
    * makes an API POST request
    *
    * @async
-   * @returns {promise} response as promise
+   * @returns {Promise<response>} - response as promise, status, statusText and body
    * @throws {error}
    * @param {string} endpoint string with full endpoint
    */
@@ -54,12 +65,14 @@ class ApiManager {
     };
     params.headers = { "Content-Type": "application/json" };
     params.body = JSON.stringify({ message: message });
-    console.log(params);
 
     try {
       const resp = await fetch(this.url + endpoint, params);
-      const json = await resp.json();
-      return json;
+      return {
+        status: resp.status,
+        statusText: resp.statusText,
+        body: await resp.json()
+      };
     } catch (error) {
       throw error;
     }
