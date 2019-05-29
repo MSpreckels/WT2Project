@@ -13,7 +13,9 @@
   margin-top: 30px;
   margin-bottom: 30px;
 }
-
+.much-rotate {
+  animation: ramButton-loading-spin 4s infinite linear;
+}
 .rotate {
   animation: ramButton-loading-spin 0.5 1s ease-in-out;
 }
