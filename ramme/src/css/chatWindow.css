@@ -1,0 +1,15 @@
+.myMessage,
+.otherMessage {
+  font-size: 15px;
+}
+
+.myMessage {
+  background-color: #07ff18;
+  width: 50%;
+  margin-left: 50%;
+}
+
+.otherMessage {
+  background-color: #98ff9f;
+  width: 50%;
+}

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { ReactComponent as Logo } from "../images/baseline-settings-20px.svg";
+import "../css/option.css";
 
 class Option extends Component {
   state = { rotate: false };

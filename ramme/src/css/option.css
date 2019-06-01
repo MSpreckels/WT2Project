@@ -1,0 +1,7 @@
+.option {
+  text-align: left;
+}
+
+.rotate {
+  animation: ramButton-loading-spin 0.5 1s ease-in-out;
+}

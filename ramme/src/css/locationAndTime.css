@@ -1,0 +1,63 @@
+.roundedBox {
+  width: 100%;
+  background-color: white;
+  color: #076d00;
+  border-radius: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  border: none;
+  text-align-last: center;
+  display: inline-block;
+  height: 24px;
+  line-height: 24px;
+  font-size: 15px;
+}
+
+.dropdown {
+  background: url("../images/arrow.svg") no-repeat white;
+  background-position: right;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  outline: none;
+  width: calc(100% - var(--locationAndTimeIconElementLength));
+}
+
+.locationAndTime > div {
+  width: calc(100% - var(--locationAndTimeIconElementLength));
+  margin: auto;
+  margin-bottom: 10px;
+  transform: translateX(-16px);
+}
+
+.locationAndTime > div > label {
+  margin-right: 8px;
+  float: left;
+}
+
+.locationAndTime > div > label > img {
+  margin: 0;
+  display: inline-block;
+}
+
+.timeRadioForm input[type="radio"] {
+  display: none;
+}
+
+.timeLabel {
+  background: rgb(255, 255, 255);
+  transition: 0.5s;
+}
+
+.timeRadioForm input:checked + .timeLabel {
+  background: rgb(51, 187, 16);
+  color: white;
+  transition: 0.5s;
+}
+
+.timeLabel {
+  width: 20%;
+  margin: 0 2px;
+}

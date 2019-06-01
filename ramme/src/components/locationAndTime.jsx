@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import location from "../images/location-24px.svg";
 import time from "../images/time-24px.svg";
 import moment from "moment";
+import "../css/locationAndTime.css";
 
 class LocationAndTime extends Component {
   state = {};
@@ -63,7 +64,6 @@ function getTimeRender(props) {
           .format("HH:mm")}
       </div>
     );
-    //return <TimePicker className="dropdown timepickDisabled" defaultValue={moment(props.meetingTime, format)} minuteStep={15} format={format} disabled/>;
   } else {
     return (
       <div className="timeRadioForm roundedBox widthWithIcon">

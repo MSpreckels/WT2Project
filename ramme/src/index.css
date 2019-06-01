@@ -1,3 +1,7 @@
+:root {
+  --locationAndTimeIconElementLength: 32px;
+}
+
 html,
 body {
   height: 100%;
@@ -16,6 +20,10 @@ body {
   background-image: linear-gradient(to bottom, white, rgba(194, 255, 219, 1));
 }
 
+.widthWithIcon {
+  width: calc(100% - var(--locationAndTimeIconElementLength)) !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -28,4 +36,13 @@ code {
 
 .redBorder {
   border: 1px solid red;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

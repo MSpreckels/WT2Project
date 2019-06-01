@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Chat from "./chat";
+import "../css/footer.css";
 
 class Footer extends Component {
   state = {};

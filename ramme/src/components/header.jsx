@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Logo from "./logo";
 import Option from "./option";
+import "../css/header.css";
 
 class Header extends Component {
   state = {};
