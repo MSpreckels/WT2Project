@@ -7,7 +7,7 @@ import Footer from "./components/footer";
 
 function App() {
   return (
-    <div className="App redBorder">
+    <div className="App">
       <Header />
       <Main />
       <Footer />
