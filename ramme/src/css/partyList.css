@@ -1,0 +1,34 @@
+.partyList {
+  color: #076d00;
+  text-align: center;
+  width: calc(100% - calc(var(--locationAndTimeIconElementLength) * 2));
+  padding: 0;
+  list-style: none outside url("../images/baseline-person_pin-24px.svg");
+}
+
+.partyList > li {
+  background-color: white;
+  border: none;
+  margin: 0;
+}
+/*Firefox list fix, should be done different in future*/
+@-moz-document url-prefix() {
+  .partyList > li > div {
+    margin: 0;
+    display: list-item;
+    list-style: none outside url("../images/empty-firefox-list-fix.svg");
+  }
+}
+
+.partyList > li:hover {
+  background: rgb(247, 247, 247);
+}
+
+.partyList > li:first-of-type {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.partyList > li:last-of-type {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}

@@ -1,8 +1,11 @@
 .App {
   text-align: center;
   max-width: 540px;
-  margin: 0 auto;
-  height: 100%;
+  height: 100vh;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 .much-rotate {
   animation: ramButton-loading-spin 4s infinite linear;
