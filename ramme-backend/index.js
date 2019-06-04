@@ -70,7 +70,7 @@ app.post("/api/parties", (req, res) => {
   );
 });
 
-//TODO: implement req.body.partyId
+//TODO: implement req.body.partyId (HexString)
 app.delete("/api/parties", (req, res) => {
   res.send(partyManager.deleteFromParty(req.body.partyId, req.session.id));
 });

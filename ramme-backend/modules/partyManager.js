@@ -1,9 +1,10 @@
-const url = "mongodb://localhost:27017/mongo-db-test";
+const url =
+  "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 const ObjectID = require("mongodb").ObjectID;
 const mongoose = require("mongoose");
 const partySchema = {
   location: String,
-  time: String,
+  time: Date,
   members: [String]
 };
 const Parties = mongoose.model("parties", partySchema);
@@ -23,8 +24,6 @@ async function addToParty(p_location, p_time, p_idMember) {
     { new: true, useFindAndModify: false }
   );
 
-  console.log(party);
-
   if (party == null) {
     party = await Parties.create({
       location: p_location,
@@ -32,6 +31,8 @@ async function addToParty(p_location, p_time, p_idMember) {
       members: [p_idMember]
     });
   }
+
+  console.log(party);
 
   return party;
 }
@@ -54,13 +55,14 @@ async function deleteFromParty(p_idPartyHex, p_idMember) {
     }
   );
 
-  console.log(party);
-
   if (party.members.length == 0) {
-    let delObject = await dbo.collection("parties").deleteOne({
+    let delObject = await Parties.deleteOne({
       _id: objectIdParty
     });
+    party = {};
   }
+
+  console.log(party);
 
   return party;
 }
