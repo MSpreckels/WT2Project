@@ -64,7 +64,16 @@ app.get("/api/catchphrases", (req, res) => {
   res.send(temmplateData.catchphrases);
 });
 
-app.post("/api/parties", partyManager.addToParty);
+app.post("/api/parties", (req, res) => {
+  res.send(
+    partyManager.addToParty(
+      req.body.location,
+      req.body.time,
+      req.body.sessionId
+    )
+  );
+});
+
 app.delete("/api/parties", partyManager.deleteFromParty);
 
 const port = process.env.PORT || 5000;

@@ -3,6 +3,9 @@ const url = "mongodb://localhost:27017/";
 const ObjectID = require("mongodb").ObjectID;
 
 async function addToParty(p_location, p_time, p_idMember) {
+    
+    let party = {};
+
     MongoClient.connect(url, {useNewUrlParser: true}, 
         function(err, db) 
         {
@@ -10,7 +13,7 @@ async function addToParty(p_location, p_time, p_idMember) {
         
             const dbo = db.db("mongo-db-test");
 
-            let partys2 = await dbo.collection("parties").findOneAndUpdate(
+            party = await dbo.collection("parties").findOneAndUpdate(
                 {
                     location: p_location,
                     time: p_time,
@@ -20,9 +23,9 @@ async function addToParty(p_location, p_time, p_idMember) {
                 { returnOriginal: false }
             );
         
-            if (partys2.value == null) 
+            if (party.value == null) 
             {
-                partys2 = await dbo.collection("parties").insertOne(
+                party = await dbo.collection("parties").insertOne(
                 {
                     location: p_location,
                     time: p_time,
@@ -32,6 +35,7 @@ async function addToParty(p_location, p_time, p_idMember) {
             db.close();
         }
     );
+    return party.value._id.toString();
 }
 
 
@@ -39,7 +43,7 @@ async function deleteFromParty(p_idParty, p_idMember) {
     MongoClient.connect(url, {useNewUrlParser: true}, 
         function(err, db) 
         {
-            let delParty = await dbo.collection("parties").findOneAndUpdate(
+            let party = await dbo.collection("parties").findOneAndUpdate(
                 {
                     _id: p_idParty
                 },
@@ -51,7 +55,7 @@ async function deleteFromParty(p_idParty, p_idMember) {
                 }
             );
             //console.log(delParty);
-            if (delParty.value.members.length == 0) 
+            if (party.value.members.length == 0) 
             {
                 let delNotify = await dbo.collection("parties").deleteOne({
                     _id: p_idParty
