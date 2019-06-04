@@ -5,6 +5,7 @@ const session = require("express-session");
 var MongoDBStore = require("connect-mongodb-session")(session);
 const sessionManager = require("./modules/sessionManager");
 const chatManager = require("./modules/chatManager");
+const partyManager = require("./modules/partyManager");
 const cors = require("cors");
 
 var whitelist = ["http://localhost:3000", "http://m-spreckels.net"];
@@ -62,6 +63,9 @@ app.get("/api/locations", (req, res) => {
 app.get("/api/catchphrases", (req, res) => {
   res.send(temmplateData.catchphrases);
 });
+
+app.post("/api/parties", partyManager.addToParty);
+app.delete("/api/parties", partyManager.deleteFromParty);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
