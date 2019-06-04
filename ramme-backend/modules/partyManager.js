@@ -9,6 +9,17 @@ const partySchema = {
 };
 const Parties = mongoose.model("parties", partySchema);
 
+/**
+ * Adds User to existing party matching his time and location
+ * and having less than four members, or creates new party
+ * for user's time and location
+ *
+ * @async
+ * @returns {party} returns joined or newly created party
+ * @param p_location Location string for "location" from request
+ * @param p_time Date object for "time" from request,
+ * @param p_idMember User's session ID
+ */
 async function addToParty(p_location, p_time, p_idMember) {
   let party = {};
 
@@ -37,6 +48,15 @@ async function addToParty(p_location, p_time, p_idMember) {
   return party;
 }
 
+/**
+ * Deletes user from party's members array and afterwards
+ * deletes party from database, if members array is empty.
+ *
+ * @async
+ * @returns Party object without user or "{}", if party got deleted.
+ * @param p_idPartyHex Party ID as Hex string from Mongoose ObjectID
+ * @param p_idMember User's session ID
+ */
 async function deleteFromParty(p_idPartyHex, p_idMember) {
   const objectIdParty = new ObjectID(p_idPartyHex);
   let party = {};
