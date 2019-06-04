@@ -32,7 +32,7 @@ class LocationAndTime extends Component {
 function getLocationRender(props) {
   if (props.readonly) {
     return (
-      <div id="location" className="roundedBox widthWithIcon">
+      <div id="location" className="dropdown roundedBox widthWithIcon">
         <option key={props.meetingLocation} value={props.meetingLocation}>
           {props.meetingLocation}
         </option>
