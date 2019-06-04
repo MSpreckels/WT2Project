@@ -35,17 +35,21 @@ async function addToParty(p_location, p_time, p_idMember) {
             db.close();
         }
     );
-    return party.value._id.toString();
+    return party.value;
 }
 
 
-async function deleteFromParty(p_idParty, p_idMember) {
+async function deleteFromParty(p_idPartyHex, p_idMember) {
+
+    const objectIdParty = new ObjectID(p_idPartyHex);
+    let party = {};
+
     MongoClient.connect(url, {useNewUrlParser: true}, 
         function(err, db) 
         {
-            let party = await dbo.collection("parties").findOneAndUpdate(
+            party = await dbo.collection("parties").findOneAndUpdate(
                 {
-                    _id: p_idParty
+                    _id: objectIdParty
                 },
                 {
                     $pull: { members: p_idMember }
@@ -56,13 +60,14 @@ async function deleteFromParty(p_idParty, p_idMember) {
             );
             //console.log(delParty);
             if (party.value.members.length == 0) 
-            {
-                let delNotify = await dbo.collection("parties").deleteOne({
-                    _id: p_idParty
+            {let delObject = await dbo.collection("parties").deleteOne({
+                    _id: objectIdParty
                 });
             }
+            db.close();
         }
     );
+    return party;
 }
 
 exports.addToParty = addToParty;

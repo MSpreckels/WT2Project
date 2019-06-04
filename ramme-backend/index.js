@@ -66,15 +66,14 @@ app.get("/api/catchphrases", (req, res) => {
 
 app.post("/api/parties", (req, res) => {
   res.send(
-    partyManager.addToParty(
-      req.body.location,
-      req.body.time,
-      req.body.sessionId
-    )
+    partyManager.addToParty(req.body.location, req.body.time, req.session.id)
   );
 });
 
-app.delete("/api/parties", partyManager.deleteFromParty);
+//TODO: implement req.body.partyId
+app.delete("/api/parties", (req, res) => {
+  res.send(partyManager.deleteFromParty(req.body.partyId, req.session.id));
+});
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
