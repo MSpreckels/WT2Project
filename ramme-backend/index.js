@@ -6,6 +6,7 @@ var MongoDBStore = require("connect-mongodb-session")(session);
 const sessionManager = require("./modules/sessionManager");
 const chatManager = require("./modules/chatManager");
 const cors = require("cors");
+const catchphraseManager = require("./modules/catchphraseManager");
 
 var whitelist = ["http://localhost:3000", "http://m-spreckels.net"];
 var corsOptions = {
@@ -58,9 +59,11 @@ app.get("/api/locations", (req, res) => {
   res.send(temmplateData.locations);
 });
 
-app.get("/api/catchphrases", (req, res) => {
+/*app.get("/api/catchphrases", (req, res) => {
   res.send(temmplateData.catchphrases);
-});
+});*/
+app.get("/api/catchphrases", catchphraseManager.getCatchphrases);
+//app.post("/api/catchphrases", catchphraseManager.sendCatchphrases);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
