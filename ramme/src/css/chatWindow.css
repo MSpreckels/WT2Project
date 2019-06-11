@@ -1,15 +1,29 @@
 .myMessage,
 .otherMessage {
-  font-size: 15px;
+    font-size: 15px;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+.myMessage > h4,
+.otherMessage > h4 {
+    text-align: left;
+    margin-bottom: 1px;
+}
+
+.myMessage > p,
+.otherMessage > p {
+    text-align: left;
+    margin-top: 1px;
 }
 
 .myMessage {
-  background-color: #07ff18;
-  width: 50%;
-  margin-left: 50%;
+    background-color: #07ff18;
+    /*width: 50%;
+    margin-left: 50%;*/
 }
 
 .otherMessage {
-  background-color: #98ff9f;
-  width: 50%;
+    background-color: #98ff9f;
+    /*width: 50%;*/
 }

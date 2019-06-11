@@ -3,6 +3,7 @@ import Popup from "reactjs-popup";
 import ChatWindow from "../components/chatwindow";
 import chat from "../images/baseline-chat-24px.svg";
 import ApiManager from "../js/ApiManager";
+import io from "socket.io-client";
 
 class Chat extends Component {
     state = {
@@ -13,8 +14,21 @@ class Chat extends Component {
         let am = new ApiManager("http://localhost:5000/api");
 
         am.get("messages")
-            .then(res => this.setState({ res }))
+            .then(res => this.setState({ res: res.body.messages }))
             .catch(console.log);
+
+        var socket = io.connect("http://localhost:5000");
+        socket.on("connect", function(data) {
+            socket.emit("join", "Hello World from client");
+        });
+
+        //TODO: dunno how to do this rn
+        socket.on("message", msg => {
+            console.log(this.state.res);
+            this.setState({ res: this.state.res.concat([msg]) });
+            console.log(this.state.res);
+        });
+
         /*setInterval(() => {
             am.initialize(() => {
                 am.get("messages")
@@ -36,7 +50,7 @@ class Chat extends Component {
                 position="top center"
                 closeOnDocumentClick
             >
-                <ChatWindow messages={this.state.res != null ? this.state.res.body.messages : []} onSendMessage={this.sendMessage} />
+                <ChatWindow messages={this.state.res != null ? this.state.res : []} onSendMessage={this.sendMessage} />
             </Popup>
         );
     }
