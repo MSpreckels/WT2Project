@@ -13,7 +13,8 @@ class Main extends Component {
         hasParty: false,
         locations: [],
         meetingTime: 0,
-        meetingLocation: "Mensa Hochschule Bochum"
+        meetingLocation: "Mensa Hochschule Bochum",
+        catchphrases: null
     };
 
     onButtonClick = lastButtonState => {
@@ -60,12 +61,13 @@ class Main extends Component {
 
         let am = new ApiManager("http://localhost:5000/api");
         am.get("locations").then(res => this.setState({ locations: res.body }));
+        am.get("catchphrases").then(res => this.setState({ catchphrases: res.body.catchphrases }));
     }
 
     render() {
         return (
             <main>
-                <Text phrases={this.state.templatedata != null ? this.state.templatedata.catchphrases : []} />
+                <Text phrases={this.state.catchphrases != null ? this.state.catchphrases : []} />
                 <Action onButtonClick={this.onButtonClick} buttonState={this.state.activity} hasParty={this.state.hasParty} meetingTime={this.state.meetingTime} meetingLocation={this.state.meetingLocation} />
                 <Activity activity={this.state.activity} data={this.state.templatedata} locations={this.state.locations} onTimeChange={this.onTimeChange} onLocationChange={this.onLocationChange} />
             </main>
