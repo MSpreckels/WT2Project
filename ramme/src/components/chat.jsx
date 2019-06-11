@@ -22,6 +22,7 @@ class Chat extends Component {
             socket.emit("join", "Hello World from client");
         });
 
+        //TODO: dunno how to do this rn
         socket.on("message", msg => {
             console.log(this.state.res);
             this.setState({ res: this.state.res.concat([msg]) });
