@@ -14,7 +14,7 @@ const chatManager = require("./modules/chatManager");
 const cors = require("cors");
 const catchphraseManager = require("./modules/catchphraseManager");
 
-var whitelist = ["http://localhost:3000", "http://m-spreckels.net"];
+var whitelist = ["http://localhost:3000", "http://81.169.194.105:5000"];
 var corsOptions = {
     origin: function(origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {

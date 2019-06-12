@@ -5,12 +5,14 @@ import chat from "../images/baseline-chat-24px.svg";
 import ApiManager from "../js/ApiManager";
 import io from "socket.io-client";
 
+var sendMessage = false;
 class Chat extends Component {
     state = {
         res: null
     };
 
     componentDidMount() {
+        //let am = new ApiManager("http://81.169.194.105:5000/api");
         let am = new ApiManager("http://localhost:5000/api");
 
         am.get("messages")
@@ -24,9 +26,8 @@ class Chat extends Component {
 
         //TODO: dunno how to do this rn
         socket.on("message", msg => {
-            console.log(this.state.res);
-            this.setState({ res: this.state.res.concat([msg]) });
-            console.log(this.state.res);
+            this.setState({ res: this.state.res.concat([msg.concat(sendMessage)]) });
+            sendMessage = false;
         });
 
         /*setInterval(() => {
@@ -55,16 +56,15 @@ class Chat extends Component {
         );
     }
 
-    setMessage = message => {
-        console.log(message);
-    };
-
     sendMessage = msg => {
         let am = new ApiManager("http://localhost:5000/api");
 
         //console.log(msg);
         am.post("messages", msg)
-            .then(res => console.log(res))
+            .then(res => {
+                sendMessage = true;
+                //this.setState({ res: this.state.res.concat([res]) });
+            })
             .catch(console.log);
     };
 }

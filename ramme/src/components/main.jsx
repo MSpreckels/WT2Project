@@ -59,7 +59,7 @@ class Main extends Component {
 
         request.send();
 
-        let am = new ApiManager("http://localhost:5000/api");
+        let am = new ApiManager("http://81.169.194.105:5000/api");
         am.get("locations").then(res => this.setState({ locations: res.body }));
         am.get("catchphrases").then(res => this.setState({ catchphrases: res.body.catchphrases }));
     }

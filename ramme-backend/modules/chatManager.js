@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const sessionManager = require("./sessionManager");
 
-let messageScheme = { sessionid: String, name: String, message: String };
+let messageScheme = { sessionid: String, name: String, message: String, timestamp: Number };
 
 const Message = mongoose.model("chatmessages", messageScheme);
 
@@ -27,14 +27,20 @@ async function sendMessage(req, res) {
         let message = new Message({
             sessionid: req.session.id,
             name: req.session.name,
-            message: req.body.message
+            message: req.body.message,
+            timestamp: new Date().getTime()
         });
         message.save(err => {
             if (err) res.status(500).send({ message: "message could not be send " });
 
-            global.io.emit("message", [req.session.name, req.body.message]);
-
-            res.status(201).send({ message: "Message send" });
+            res.status(201).send({ message: "message send." });
+            Message.find()
+                .sort("-timestamp")
+                .limit(1)
+                .exec((err, x) => {
+                    if (err) console.log(err);
+                    global.io.emit("message", [x[0].name, x[0].message]);
+                });
         });
     }
 }
