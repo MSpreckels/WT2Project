@@ -11,6 +11,7 @@ const session = require("express-session");
 var MongoDBStore = require("connect-mongodb-session")(session);
 const sessionManager = require("./modules/sessionManager");
 const chatManager = require("./modules/chatManager");
+const partyManager = require("./modules/partyManager");
 const cors = require("cors");
 const catchphraseManager = require("./modules/catchphraseManager");
 
@@ -71,5 +72,20 @@ app.get("/api/catchphrases", catchphraseManager.getCatchphrases);
 io.on("connection", () => {
     console.log("a user is connected");
 });
+<<<<<<< HEAD
+=======
+
+app.post("/api/parties", (req, res) => {
+  res.send(
+    partyManager.addToParty(req.body.location, req.body.time, req.session.id)
+  );
+});
+
+//TODO: implement req.body.partyId (HexString)
+app.delete("/api/parties", (req, res) => {
+  res.send(partyManager.deleteFromParty(req.body.partyId, req.session.id));
+});
+
+>>>>>>> sprint-3-session
 const port = process.env.PORT || 5000;
 server.listen(port, () => console.log(`Listening on port ${port}...`));
