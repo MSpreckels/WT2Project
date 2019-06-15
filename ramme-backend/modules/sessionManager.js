@@ -37,7 +37,7 @@ async function validateSession(req) {
         });
         return query.session.securityToken === req.session.securityToken;
     } catch (error) {
-        console.error(error);
+        //console.error(error);
     }
 }
 

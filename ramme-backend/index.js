@@ -72,8 +72,6 @@ app.get("/api/catchphrases", catchphraseManager.getCatchphrases);
 io.on("connection", () => {
     console.log("a user is connected");
 });
-<<<<<<< HEAD
-=======
 
 app.post("/api/parties", (req, res) => {
   res.send(
@@ -86,6 +84,5 @@ app.delete("/api/parties", (req, res) => {
   res.send(partyManager.deleteFromParty(req.body.partyId, req.session.id));
 });
 
->>>>>>> sprint-3-session
 const port = process.env.PORT || 5000;
 server.listen(port, () => console.log(`Listening on port ${port}...`));
