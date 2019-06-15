@@ -16,13 +16,14 @@ const Parties = mongoose.model("parties", partySchema);
  * for user's time and location
  *
  * @async
- * @returns {party} returns joined or newly created party
- * @param p_location Location string for "location" from request
- * @param p_time Date object for "time" from request,
- * @param p_idMember User's session ID
  */
-async function addToParty(p_location, p_timeStart, p_timeEnd, p_idMember) {
+async function addToParty(req, res) {
   let party = {};
+
+  let p_location = req.body.location;
+  let p_timeStart = req.body.timeStart;
+  let p_timeEnd = req.body.timeEnd;
+  let p_idMember = req.session.id;
 
   mongoose.connect(url, { useNewUrlParser: true });
 
@@ -46,9 +47,14 @@ async function addToParty(p_location, p_timeStart, p_timeEnd, p_idMember) {
     });
   }
 
-  console.log(party);
+  req.session.currentPartyId = party._id;
+  req.session.save();
 
-  return party;
+  console.log(party);
+  //console.log({member: party.members});
+  res.status(201).send({members: party.members});
+
+  //return {member: party.members};
 }
 
 /**
@@ -61,11 +67,11 @@ async function addToParty(p_location, p_timeStart, p_timeEnd, p_idMember) {
  * @param p_idMember User's session ID
  */
 async function deleteFromParty(p_idPartyHex, p_idMember) {
-  const objectIdParty = new ObjectID(p_idPartyHex);
+  const objectIdParty = p_idPartyHex;//new ObjectID(p_idPartyHex);
   let party = {};
   mongoose.connect(url, { useNewUrlParser: true });
 
-  party = await Parties.findOneAndUpdate(
+  /*party = await Parties.findOneAndUpdate(
     {
       _id: objectIdParty
     },
@@ -76,18 +82,23 @@ async function deleteFromParty(p_idPartyHex, p_idMember) {
       new: true,
       useFindAndModify: false
     }
-  );
+  );*/
 
-  if (party.members.length == 0) {
-    let delObject = await Parties.deleteOne({
-      _id: objectIdParty
-    });
-    party = {};
-  }
+  await Parties.findById(objectIdParty, async (err, party) => {
+    if(err) console.log(err);
+    await party.members.remove(p_idMember);
+    if (party.members.length == 0) {
+      await Parties.deleteOne({_id: objectIdParty}, (err) => {
+        party = {};
+      });
+    }
+  
+    console.log(party);
+  
+    return party;
+  });
 
-  console.log(party);
 
-  return party;
 }
 
 exports.addToParty = addToParty;

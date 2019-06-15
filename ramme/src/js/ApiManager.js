@@ -64,7 +64,7 @@ class ApiManager {
       credentials: "include"
     };
     params.headers = { "Content-Type": "application/json" };
-    params.body = JSON.stringify({ message: message });
+    params.body = JSON.stringify(message);
 
     try {
       const resp = await fetch(this.url + endpoint, params);
@@ -80,7 +80,23 @@ class ApiManager {
   // TODO: implement put and remove
   async put(endpoint) {}
 
-  async remove(endpoint) {}
+  async delete(endpoint) {
+    if (endpoint.startsWith("/")) endpoint = endpoint.substring(1);
+    var params = {
+      method: "DELETE",
+      credentials: "include"
+    };
+    try {
+      const resp = await fetch(this.url + endpoint, params);
+      return {
+        status: resp.status,
+        statusText: resp.statusText,
+        body: await resp.json()
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 export default ApiManager;

@@ -60,9 +60,10 @@ class Chat extends Component {
         let am = new ApiManager("http://localhost:5000/api");
 
         //console.log(msg);
-        am.post("messages", msg)
+        am.post("messages", { message: msg })
             .then(res => {
                 sendMessage = true;
+                console.log(res);
                 //this.setState({ res: this.state.res.concat([res]) });
             })
             .catch(console.log);

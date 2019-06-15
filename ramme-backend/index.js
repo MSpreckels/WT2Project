@@ -73,15 +73,13 @@ io.on("connection", () => {
     console.log("a user is connected");
 });
 
-app.post("/api/parties", (req, res) => {
-  res.send(
-    partyManager.addToParty(req.body.location, req.body.time, req.session.id)
-  );
-});
+/*app.post("/api/parties", (req, res) => {
+    res.status(201).send(partyManager.addToParty(req));
+});*/
+app.post("/api/parties", partyManager.addToParty);
 
-//TODO: implement req.body.partyId (HexString)
 app.delete("/api/parties", (req, res) => {
-  res.send(partyManager.deleteFromParty(req.body.partyId, req.session.id));
+  res.send(partyManager.deleteFromParty(req.session.currentPartyId, req.session.id));
 });
 
 const port = process.env.PORT || 5000;

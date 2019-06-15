@@ -14,14 +14,15 @@ class Main extends Component {
         locations: [],
         meetingTime: 0,
         meetingLocation: "Mensa Hochschule Bochum",
-        catchphrases: null
+        catchphrases: null,
+        currentPartyMembers: ["","","",""]
     };
 
     onButtonClick = lastButtonState => {
         const activity = this.state.activity === 0 ? 1 : 0;
 
         if (lastButtonState === 0) this.searchForAvailableGroup(); //if last button state was start then we are looking for a party now
-
+        if (lastButtonState === 1) this.exitParty(); 
         this.setState({ activity: activity });
     };
 
@@ -38,8 +39,29 @@ class Main extends Component {
         //check if there are parties available who arent full yet
         //if none is found create a new party
         //for debug purposes i'll use setTimeout
+        let am = new ApiManager("http://localhost:5000/api");
+        let currentTime = new Date().getTime();
+        let partyInfos = {location: this.state.meetingLocation, 
+                        timeStart: currentTime,
+                        timeEnd: currentTime + (this.state.meetingTime*60000)};
+        
+        //TODO: Fetch names of members
+        am.post("parties", partyInfos).then((res) => {
+            let members = this.state.currentPartyMembers;
+            for(let i = 0; i < members.length; i++)
+            {
+                members[i] = i < res.body.members.length ? res.body.members[i] : "...";
+            }
+            this.setState({currentPartyMembers: members});
+        });
+        //setTimeout(this.foundParty, 5000);
+    }
 
-        setTimeout(this.foundParty, 5000);
+    exitParty() {
+        let am = new ApiManager("http://localhost:5000/api");
+        am.delete("parties").then((res) => {
+            console.log("exited party");
+        });
     }
 
     foundParty = () => {
@@ -70,7 +92,7 @@ class Main extends Component {
             <main>
                 <Text phrases={this.state.catchphrases != null ? this.state.catchphrases : []} />
                 <Action onButtonClick={this.onButtonClick} buttonState={this.state.activity} hasParty={this.state.hasParty} meetingTime={this.state.meetingTime} meetingLocation={this.state.meetingLocation} />
-                <Activity activity={this.state.activity} data={this.state.templatedata} locations={this.state.locations} onTimeChange={this.onTimeChange} onLocationChange={this.onLocationChange} />
+                <Activity activity={this.state.activity} currentPartyMembers={this.state.currentPartyMembers} locations={this.state.locations} onTimeChange={this.onTimeChange} onLocationChange={this.onLocationChange} />
             </main>
         );
     }
