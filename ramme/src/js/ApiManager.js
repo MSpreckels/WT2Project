@@ -77,7 +77,7 @@ class ApiManager {
       throw error;
     }
   }
-  // TODO: implement put and remove
+  // TODO: implement put
   async put(endpoint) {}
 
   async delete(endpoint) {

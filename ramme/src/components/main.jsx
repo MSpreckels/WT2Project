@@ -7,7 +7,6 @@ import "../css/main.css";
 
 class Main extends Component {
     state = {
-        templatedata: null,
         names: null,
         activity: 0,
         hasParty: false,
@@ -54,6 +53,10 @@ class Main extends Component {
             }
             this.setState({currentPartyMembers: members});
         });
+
+        //TODO: update members using emit?
+
+        //TODO: check if current party is full and set this.foundParty to true
         //setTimeout(this.foundParty, 5000);
     }
 
@@ -70,17 +73,7 @@ class Main extends Component {
     };
 
     componentDidMount() {
-        let request = new XMLHttpRequest();
-        request.open("GET", "./templatedata.json", true);
-
-        request.addEventListener("load", () => {
-            if (request.status >= 200 && request.status < 300) {
-                this.setState({ templatedata: JSON.parse(request.response) });
-            }
-        });
-
-        request.send();
-
+        
         //let am = new ApiManager("http://81.169.194.105:5000/api");
         let am = new ApiManager("http://localhost:5000/api");
         am.get("locations").then(res => this.setState({ locations: res.body }));
