@@ -53,7 +53,9 @@ async function addToParty(req, res) {
 
   console.log(party);
   //console.log({member: party.members});
-  res.status(201).send({currentPartyID: party._id, currentClientID: p_idMember});
+  res
+    .status(201)
+    .send({ currentPartyID: party._id, currentClientID: p_idMember });
 
   //TODO: add socketio emit to notify other party members someone joined
 
@@ -71,7 +73,6 @@ async function addToParty(req, res) {
  */
 async function deleteFromParty(p_idPartyHex, p_idMember) {
   const objectIdParty = p_idPartyHex; //new ObjectID(p_idPartyHex);
-  let party = {};
   mongoose.connect(url, { useNewUrlParser: true });
 
   /*party = await Parties.findOneAndUpdate(
@@ -87,29 +88,36 @@ async function deleteFromParty(p_idPartyHex, p_idMember) {
     }
   );*/
 
-  await Parties.findById(objectIdParty, async (err, party) => {
-    if (err) console.log(err);
-    await party.members.remove(p_idMember);
-    if (party.members.length == 0) {
-      await Parties.deleteOne({ _id: objectIdParty }, err => {
-        party = {};
-      });
-    }
-
-    console.log(party);
-
-    return party;
-  });
+  let party = await Parties.findById(objectIdParty);
+  console.log(party);
 }
 async function getNames(p_idPartyHex) {
   mongoose.connect(url, { useNewUrlParser: true });
   let party = await Parties.findById(p_idPartyHex);
   let names = [];
-  for (var member in party.member) {
-    name.push(await sessionManager.getName(member));
+  for (var member of party.members) {
+    names.push(await sessionManager.getName(member));
   }
   return names;
 }
+async function getGroup(req, res, next) {
+  mongoose.connect(
+    "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true",
+    { useNewUrlParser: true }
+  );
+  try {
+    let party = await Parties.find({ members: req.session.id }).sort({
+      timeEnd: -1
+    });
+    //console.log(new Date(party[1].timeEnd));
+    if (party) res.send({ partyID: party[0]._id });
+    else res.status(404).send({ partyID: null });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+exports.getGroup = getGroup;
 exports.addToParty = addToParty;
 exports.deleteFromParty = deleteFromParty;
 exports.getNames = getNames;

@@ -53,9 +53,10 @@ async function getName(_id) {
     var query = await Sessions.findOne({
       _id: _id
     });
+
     return query.session.name;
   } catch (error) {
-    console.error(error);
+    //console.error(error);
   }
 }
 

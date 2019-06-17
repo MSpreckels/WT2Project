@@ -15,53 +15,58 @@ const partyManager = require("./modules/partyManager");
 const cors = require("cors");
 const catchphraseManager = require("./modules/catchphraseManager");
 
-var whitelist = ["http://localhost:3000", "http://81.169.194.105:5000", "http://m-spreckels.net"];
+var whitelist = [
+  "http://localhost:3000",
+  "http://81.169.194.105:5000",
+  "http://m-spreckels.net"
+];
 var corsOptions = {
-    origin: function(origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true);
-        } else {
-            callback(new Error("Not allowed by CORS"));
-        }
-    },
-    credentials: true
+  origin: function(origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
 };
 
 var store = new MongoDBStore({
-    uri: "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true",
-    collection: "sessions"
+  uri:
+    "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true",
+  collection: "sessions"
 });
 
 store.on("error", function(error) {
-    console.log(error);
+  console.log(error);
 });
 
 app.use(cors(corsOptions));
 
 app.use(
-    session({
-        secret: "Shh, its a secret!",   
-        resave: false,
-        saveUninitialized: true,
-        store: store,
-        cookie: {
-            maxAge: 1000 * 60 * 60 * 24 * 7
-        }
-    })
+  session({
+    secret: "Shh, its a secret!",
+    resave: false,
+    saveUninitialized: true,
+    store: store,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+  })
 );
 app.use(sessionManager.initializeSession);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-    res.redirect("http://" + req.hostname + ":5000");
+  res.redirect("http://" + req.hostname + ":5000");
 });
 
 app.get("/api/messages", chatManager.getMessages);
 app.post("/api/messages", chatManager.sendMessage);
 
 app.get("/api/locations", (req, res) => {
-    res.send(temmplateData.locations);
+  res.send(temmplateData.locations);
 });
 
 /*app.get("/api/catchphrases", (req, res) => {
@@ -69,26 +74,28 @@ app.get("/api/locations", (req, res) => {
 });*/
 app.get("/api/catchphrases", catchphraseManager.getCatchphrases);
 //app.post("/api/catchphrases", catchphraseManager.sendCatchphrases);
-io.on("connection", (socket) => {
-    socket.on('joinParty', async (data) => { 
-        socket.join(data.room); 
-        io.in(data.room).emit('OnPartyJoin', {clientName: await sessionManager.getName(data.clientID), currentMembers: await partyManager.getNames(data.room)});
+io.on("connection", socket => {
+  socket.on("joinParty", async data => {
+    socket.join(data.room);
+    io.in(data.room).emit("OnPartyJoin", {
+      clientName: await sessionManager.getName(data.clientID),
+      currentMembers: await partyManager.getNames(data.room)
     });
+  });
 
-    socket.on('leaveParty', (data) => { 
-        socket.leave(data.room); 
-        io.in(data.room).emit('OnPartyLeave', {msg: "Person left."});
-    });
-    
+  socket.on("leaveParty", data => {
+    socket.leave(data.room);
+    io.in(data.room).emit("OnPartyLeave", { msg: "Person left." });
+  });
 });
 
-/*app.post("/api/parties", (req, res) => {
-    res.status(201).send(partyManager.addToParty(req));
-});*/
+app.get("/api/parties", partyManager.getGroup);
 app.post("/api/parties", partyManager.addToParty);
 
 app.delete("/api/parties", (req, res) => {
-  res.send(partyManager.deleteFromParty(req.session.currentPartyId, req.session.id));
+  res.send(
+    partyManager.deleteFromParty(req.session.currentPartyId, req.session.id)
+  );
 });
 
 const port = process.env.PORT || 5000;
