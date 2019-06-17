@@ -3,7 +3,6 @@ import Popup from "reactjs-popup";
 import ChatWindow from "../components/chatwindow";
 import chat from "../images/baseline-chat-24px.svg";
 import ApiManager from "../js/ApiManager";
-import io from "socket.io-client";
 
 var sendMessage = false;
 class Chat extends Component {
@@ -19,12 +18,7 @@ class Chat extends Component {
             .then(res => this.setState({ res: res.body.messages }))
             .catch(console.log);
 
-        var socket = io.connect("http://localhost:5000");
-        socket.on("connect", function (data) {
-            socket.emit("join", "Hello World from client");
-        });
-
-        socket.on("message", msg => {
+        this.props.socket.on("message", msg => {
             this.setState({ res: this.state.res.concat([msg.concat(sendMessage)]) });
             sendMessage = false;
         });

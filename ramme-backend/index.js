@@ -69,8 +69,17 @@ app.get("/api/locations", (req, res) => {
 });*/
 app.get("/api/catchphrases", catchphraseManager.getCatchphrases);
 //app.post("/api/catchphrases", catchphraseManager.sendCatchphrases);
-io.on("connection", () => {
-    console.log("a user is connected");
+io.on("connection", (socket) => {
+    socket.on('joinParty', (data) => { 
+        socket.join(data.room); 
+        io.in(data.room).emit('OnPartyJoin', {msg: "Person joined."});
+    });
+
+    socket.on('leaveParty', (data) => { 
+        socket.leave(data.room); 
+        io.in(data.room).emit('OnPartyLeave', {msg: "Person left."});
+    });
+    
 });
 
 /*app.post("/api/parties", (req, res) => {

@@ -14,9 +14,10 @@ class Main extends Component {
         meetingTime: 0,
         meetingLocation: "Mensa Hochschule Bochum",
         catchphrases: null,
-        currentPartyMembers: ["","","",""]
+        currentPartyMembers: ["","","",""],
+        currentPartyID: null,
     };
-
+    
     onButtonClick = lastButtonState => {
         const activity = this.state.activity === 0 ? 1 : 0;
 
@@ -46,12 +47,18 @@ class Main extends Component {
         
         //TODO: Fetch names of members
         am.post("parties", partyInfos).then((res) => {
-            let members = this.state.currentPartyMembers;
-            for(let i = 0; i < members.length; i++)
+            // let members = this.state.currentPartyMembers;
+            // for(let i = 0; i < members.length; i++)
+            // {
+            //     members[i] = i < res.body.members.length ? res.body.members[i] : "...";
+            // }
+            // this.setState({currentPartyMembers: members});
+            if(res.status === 201)
             {
-                members[i] = i < res.body.members.length ? res.body.members[i] : "...";
+                this.setState({currentPartyID: res.body.currentPartyID});
+                this.props.socket.emit("joinParty", {room: res.body.currentPartyID});
             }
-            this.setState({currentPartyMembers: members});
+
         });
 
         //TODO: update members using emit?
@@ -63,6 +70,7 @@ class Main extends Component {
     exitParty() {
         let am = new ApiManager("http://localhost:5000/api");
         am.delete("parties").then((res) => {
+            this.props.socket.emit("leaveParty", {room: this.state.currentPartyID});
             console.log("exited party");
         });
     }
@@ -78,6 +86,12 @@ class Main extends Component {
         let am = new ApiManager("http://localhost:5000/api");
         am.get("locations").then(res => this.setState({ locations: res.body }));
         am.get("catchphrases").then(res => this.setState({ catchphrases: res.body.catchphrases }));
+
+        // this.socket.on("connect", function (data) {
+        //     this.socket.emit("join", "Hello World from client");
+        // });
+
+
     }
 
     render() {
@@ -85,7 +99,7 @@ class Main extends Component {
             <main>
                 <Text phrases={this.state.catchphrases != null ? this.state.catchphrases : []} />
                 <Action onButtonClick={this.onButtonClick} buttonState={this.state.activity} hasParty={this.state.hasParty} meetingTime={this.state.meetingTime} meetingLocation={this.state.meetingLocation} />
-                <Activity activity={this.state.activity} currentPartyMembers={this.state.currentPartyMembers} locations={this.state.locations} onTimeChange={this.onTimeChange} onLocationChange={this.onLocationChange} />
+                <Activity activity={this.state.activity} currentPartyMembers={this.state.currentPartyMembers} locations={this.state.locations}  onTimeChange={this.onTimeChange} onLocationChange={this.onLocationChange} />
             </main>
         );
     }

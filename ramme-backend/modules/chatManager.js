@@ -39,7 +39,7 @@ async function sendMessage(req, res) {
                 .limit(1)
                 .exec((err, x) => {
                     if (err) console.log(err);
-                    global.io.emit("message", [x[0].name, x[0].message]);
+                    global.io.in(req.session.currentPartyID).emit("message", [x[0].name, x[0].message]);
                 });
         });
     }
