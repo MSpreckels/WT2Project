@@ -90,7 +90,9 @@ class Main extends Component {
         // this.socket.on("connect", function (data) {
         //     this.socket.emit("join", "Hello World from client");
         // });
-
+        this.props.socket.on("OnPartyJoin", (data) => {
+            console.log(data);
+        });
 
     }
 
