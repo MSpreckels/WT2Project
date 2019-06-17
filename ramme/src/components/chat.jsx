@@ -11,10 +11,7 @@ class Chat extends Component {
     };
 
     componentDidMount() {
-        //let am = new ApiManager("http://81.169.194.105:5000/api");
-        let am = new ApiManager("http://localhost:5000/api");
-
-        am.get("messages")
+        this.props.am.get("messages")
             .then(res => this.setState({ res: res.body.messages }))
             .catch(console.log);
 
@@ -50,10 +47,8 @@ class Chat extends Component {
     }
 
     sendMessage = msg => {
-        let am = new ApiManager("http://localhost:5000/api");
-
         //console.log(msg);
-        am.post("messages", { message: msg })
+        this.props.am.post("messages", { message: msg })
             .then(res => {
                 sendMessage = true;
                 console.log(res);

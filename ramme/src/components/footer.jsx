@@ -7,7 +7,7 @@ class Footer extends Component {
   render() {
     return (
       <footer>
-        <Chat socket={this.props.socket}/>
+        <Chat socket={this.props.socket} am={this.props.am}/>
         {/* <Info /> */}
       </footer>
     );

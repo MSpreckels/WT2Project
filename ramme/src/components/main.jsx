@@ -39,14 +39,13 @@ class Main extends Component {
         //check if there are parties available who arent full yet
         //if none is found create a new party
         //for debug purposes i'll use setTimeout
-        let am = new ApiManager("http://localhost:5000/api");
         let currentTime = new Date().getTime();
         let partyInfos = {location: this.state.meetingLocation, 
                         timeStart: currentTime,
                         timeEnd: currentTime + (this.state.meetingTime*60000)};
         
         //TODO: Fetch names of members
-        am.post("parties", partyInfos).then((res) => {
+        this.props.am.post("parties", partyInfos).then((res) => {
             // let members = this.state.currentPartyMembers;
             // for(let i = 0; i < members.length; i++)
             // {
@@ -68,8 +67,7 @@ class Main extends Component {
     }
 
     exitParty() {
-        let am = new ApiManager("http://localhost:5000/api");
-        am.delete("parties").then((res) => {
+       this.props.am.delete("parties").then((res) => {
             this.props.socket.emit("leaveParty", {room: this.state.currentPartyID});
             this.setState({currentPartyMembers: ["","","",""]});
             console.log("exited party");
@@ -83,10 +81,8 @@ class Main extends Component {
 
     componentDidMount() {
         
-        //let am = new ApiManager("http://81.169.194.105:5000/api");
-        let am = new ApiManager("http://localhost:5000/api");
-        am.get("locations").then(res => this.setState({ locations: res.body }));
-        am.get("catchphrases").then(res => this.setState({ catchphrases: res.body.catchphrases }));
+       this.props.am.get("locations").then(res => this.setState({ locations: res.body }));
+       this.props.am.get("catchphrases").then(res => this.setState({ catchphrases: res.body.catchphrases }));
 
         // this.socket.on("connect", function (data) {
         //     this.socket.emit("join", "Hello World from client");
