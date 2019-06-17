@@ -40,7 +40,7 @@ app.use(cors(corsOptions));
 
 app.use(
     session({
-        secret: "Shh, its a secret!",
+        secret: "Shh, its a secret!",   
         resave: false,
         saveUninitialized: true,
         store: store,
@@ -72,7 +72,7 @@ app.get("/api/catchphrases", catchphraseManager.getCatchphrases);
 io.on("connection", (socket) => {
     socket.on('joinParty', (data) => { 
         socket.join(data.room); 
-        io.in(data.room).emit('OnPartyJoin', {msg: "Person joined."});
+        io.in(data.room).emit('OnPartyJoin', {clientName: sessionManager.getName(data.clientID), currentMembers: partyManager.getNames()});
     });
 
     socket.on('leaveParty', (data) => { 

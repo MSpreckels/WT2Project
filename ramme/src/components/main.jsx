@@ -56,7 +56,7 @@ class Main extends Component {
             if(res.status === 201)
             {
                 this.setState({currentPartyID: res.body.currentPartyID});
-                this.props.socket.emit("joinParty", {room: res.body.currentPartyID});
+                this.props.socket.emit("joinParty", {room: res.body.currentPartyID, clientID: res.body.currentClientID});
             }
 
         });

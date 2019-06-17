@@ -52,7 +52,7 @@ async function addToParty(req, res) {
 
   console.log(party);
   //console.log({member: party.members});
-  res.status(201).send({currentPartyID: party._id});
+  res.status(201).send({currentPartyID: party._id, currentClientID: p_idMember});
 
   //TODO: add socketio emit to notify other party members someone joined
 
