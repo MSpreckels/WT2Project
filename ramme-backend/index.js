@@ -15,7 +15,7 @@ const partyManager = require("./modules/partyManager");
 const cors = require("cors");
 const catchphraseManager = require("./modules/catchphraseManager");
 
-var whitelist = ["http://localhost:3000", "http://81.169.194.105:5000"];
+var whitelist = ["http://localhost:3000", "http://81.169.194.105:5000", "http://m-spreckels.net"];
 var corsOptions = {
     origin: function(origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
@@ -70,9 +70,9 @@ app.get("/api/locations", (req, res) => {
 app.get("/api/catchphrases", catchphraseManager.getCatchphrases);
 //app.post("/api/catchphrases", catchphraseManager.sendCatchphrases);
 io.on("connection", (socket) => {
-    socket.on('joinParty', (data) => { 
+    socket.on('joinParty', async (data) => { 
         socket.join(data.room); 
-        io.in(data.room).emit('OnPartyJoin', {clientName: sessionManager.getName(data.clientID), currentMembers: partyManager.getNames()});
+        io.in(data.room).emit('OnPartyJoin', {clientName: await sessionManager.getName(data.clientID), currentMembers: await partyManager.getNames(data.room)});
     });
 
     socket.on('leaveParty', (data) => { 

@@ -71,6 +71,7 @@ class Main extends Component {
         let am = new ApiManager("http://localhost:5000/api");
         am.delete("parties").then((res) => {
             this.props.socket.emit("leaveParty", {room: this.state.currentPartyID});
+            this.setState({currentPartyMembers: ["","","",""]});
             console.log("exited party");
         });
     }
@@ -92,6 +93,17 @@ class Main extends Component {
         // });
         this.props.socket.on("OnPartyJoin", (data) => {
             console.log(data);
+            let currentParty = this.state.currentPartyMembers;
+            for(let i = 0; i < currentParty.length; i++)
+            {
+                if(currentParty[i] === "")
+                {
+                    currentParty[i] = data.clientName;
+                    break;
+                }
+            }
+                    
+            this.setState({currentPartyMembers: currentParty});
         });
 
     }

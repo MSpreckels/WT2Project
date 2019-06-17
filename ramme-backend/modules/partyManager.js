@@ -112,3 +112,4 @@ async function getNames(p_idPartyHex) {
 }
 exports.addToParty = addToParty;
 exports.deleteFromParty = deleteFromParty;
+exports.getNames = getNames;
