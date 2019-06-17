@@ -2,6 +2,7 @@ const url =
   "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 const ObjectID = require("mongodb").ObjectID;
 const mongoose = require("mongoose");
+const sessionManager = require("./sessionManager");
 const partySchema = {
   location: String,
   timeStart: Number,
@@ -52,7 +53,7 @@ async function addToParty(req, res) {
 
   console.log(party);
   //console.log({member: party.members});
-  res.status(201).send({currentPartyID: party._id});
+  res.status(201).send({ currentPartyID: party._id });
 
   //TODO: add socketio emit to notify other party members someone joined
 
@@ -69,7 +70,7 @@ async function addToParty(req, res) {
  * @param p_idMember User's session ID
  */
 async function deleteFromParty(p_idPartyHex, p_idMember) {
-  const objectIdParty = p_idPartyHex;//new ObjectID(p_idPartyHex);
+  const objectIdParty = p_idPartyHex; //new ObjectID(p_idPartyHex);
   let party = {};
   mongoose.connect(url, { useNewUrlParser: true });
 
@@ -87,21 +88,27 @@ async function deleteFromParty(p_idPartyHex, p_idMember) {
   );*/
 
   await Parties.findById(objectIdParty, async (err, party) => {
-    if(err) console.log(err);
+    if (err) console.log(err);
     await party.members.remove(p_idMember);
     if (party.members.length == 0) {
-      await Parties.deleteOne({_id: objectIdParty}, (err) => {
+      await Parties.deleteOne({ _id: objectIdParty }, err => {
         party = {};
       });
     }
-  
+
     console.log(party);
-  
+
     return party;
   });
-
-
 }
-
+async function getNames(p_idPartyHex) {
+  mongoose.connect(url, { useNewUrlParser: true });
+  let party = await Parties.findById(p_idPartyHex);
+  let names = [];
+  for (var member in party.member) {
+    name.push(await sessionManager.getName(member));
+  }
+  return names;
+}
 exports.addToParty = addToParty;
 exports.deleteFromParty = deleteFromParty;
