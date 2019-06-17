@@ -10,11 +10,11 @@ import ApiManager from "./js/ApiManager";
 
 function App() {
 
-  var socket = io.connect("http://localhost:5000");
-  var am = new ApiManager("http://localhost:5000/api");
+  // var socket = io.connect("http://localhost:5000");
+  // var am = new ApiManager("http://localhost:5000/api");
   
-  //var am = new ApiManager("http://81.169.194.105:5000/api");
-  //var socket = io.connect("http://81.169.194.105:5000");
+  var am = new ApiManager("http://81.169.194.105:5000/api");
+  var socket = io.connect("http://81.169.194.105:5000");
 
   return (
     <div className="App">

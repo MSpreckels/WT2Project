@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Action from "./action";
 import Activity from "./activity";
 import Text from "./text";
-import ApiManager from "../js/ApiManager";
 import "../css/main.css";
 
 class Main extends Component {
@@ -59,11 +58,6 @@ class Main extends Component {
             }
 
         });
-
-        //TODO: update members using emit?
-
-        //TODO: check if current party is full and set this.foundParty to true
-        //setTimeout(this.foundParty, 5000);
     }
 
     exitParty() {
@@ -84,19 +78,26 @@ class Main extends Component {
        this.props.am.get("locations").then(res => this.setState({ locations: res.body }));
        this.props.am.get("catchphrases").then(res => this.setState({ catchphrases: res.body.catchphrases }));
 
-        // this.socket.on("connect", function (data) {
-        //     this.socket.emit("join", "Hello World from client");
-        // });
+
         this.props.socket.on("OnPartyJoin", (data) => {
             console.log(data);
             let currentParty = this.state.currentPartyMembers;
             for(let i = 0; i < currentParty.length; i++)
             {
-                if(currentParty[i] === "")
-                {
-                    currentParty[i] = data.clientName;
-                    break;
-                }
+                currentParty[i] = i < data.currentMembers.length ? data.currentMembers[i] : "";
+            }
+                    
+            this.setState({currentPartyMembers: currentParty});
+            //TODO: check if current party is full and set this.foundParty to true
+
+        });
+
+        this.props.socket.on("OnPartyLeave", (data) => {
+            console.log(data);
+            let currentParty = this.state.currentPartyMembers;
+            for(let i = 0; i < currentParty.length; i++)
+            {
+                currentParty[i] = i < data.currentMembers.length ? data.currentMembers[i] : "";
             }
                     
             this.setState({currentPartyMembers: currentParty});

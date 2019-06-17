@@ -72,12 +72,11 @@ app.get("/api/catchphrases", catchphraseManager.getCatchphrases);
 io.on("connection", (socket) => {
     socket.on('joinParty', async (data) => { 
         socket.join(data.room); 
-        io.in(data.room).emit('OnPartyJoin', {clientName: await sessionManager.getName(data.clientID), currentMembers: await partyManager.getNames(data.room)});
+        io.in(data.room).emit('OnPartyJoin', {currentMembers: await partyManager.getNames(data.room)});
     });
 
-    socket.on('leaveParty', (data) => { 
+    socket.on('leaveParty', async (data) => { 
         socket.leave(data.room); 
-        io.in(data.room).emit('OnPartyLeave', {msg: "Person left."});
     });
     
 });

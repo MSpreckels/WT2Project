@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Popup from "reactjs-popup";
 import ChatWindow from "../components/chatwindow";
 import chat from "../images/baseline-chat-24px.svg";
-import ApiManager from "../js/ApiManager";
 
 var sendMessage = false;
 class Chat extends Component {

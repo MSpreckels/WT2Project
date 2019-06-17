@@ -97,6 +97,9 @@ async function deleteFromParty(p_idPartyHex, p_idMember) {
     }
 
     console.log(party);
+    if(party != {})
+      global.io.in(p_idPartyHex).emit('OnPartyLeave', {currentMembers: await getNames(party._id)});
+
 
     return party;
   });
@@ -105,8 +108,11 @@ async function getNames(p_idPartyHex) {
   mongoose.connect(url, { useNewUrlParser: true });
   let party = await Parties.findById(p_idPartyHex);
   let names = [];
-  for (var member in party.member) {
-    name.push(await sessionManager.getName(member));
+  if(party != null && party.members.length > 0)
+  {
+    for (var member of party.members) {
+      names.push(await sessionManager.getName(member));
+    }
   }
   return names;
 }
