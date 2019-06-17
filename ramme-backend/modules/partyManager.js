@@ -88,8 +88,23 @@ async function deleteFromParty(p_idPartyHex, p_idMember) {
     }
   );*/
 
-  let party = await Parties.findById(objectIdParty);
-  console.log(party);
+  await Parties.findById(objectIdParty, async (err, party) => {
+    if (err) console.log(err);
+    await party.members.remove(p_idMember);
+    if (party.members.length == 0) {
+      await Parties.deleteOne({ _id: objectIdParty }, err => {
+        party = {};
+      });
+    }
+
+    console.log(party);
+    if (party != {})
+      global.io
+        .in(p_idPartyHex)
+        .emit("OnPartyLeave", { currentMembers: await getNames(party._id) });
+
+    return party;
+  });
 }
 async function getNames(p_idPartyHex) {
   mongoose.connect(url, { useNewUrlParser: true });

@@ -78,15 +78,13 @@ io.on("connection", socket => {
   socket.on("joinParty", async data => {
     socket.join(data.room);
     io.in(data.room).emit("OnPartyJoin", {
-      clientName: await sessionManager.getName(data.clientID),
       currentMembers: await partyManager.getNames(data.room)
     });
   });
+});
 
-  socket.on("leaveParty", data => {
-    socket.leave(data.room);
-    io.in(data.room).emit("OnPartyLeave", { msg: "Person left." });
-  });
+socket.on("leaveParty", async data => {
+  socket.leave(data.room);
 });
 
 app.get("/api/parties", partyManager.getGroup);
