@@ -13,7 +13,7 @@ class Main extends Component {
     meetingTime: 0,
     meetingLocation: "Mensa Hochschule Bochum",
     catchphrases: null,
-    currentPartyMembers: ["", "", "", ""],
+    currentPartyMembers: ["...", "...", "...", "..."],
     currentPartyID: null
   };
 
@@ -56,8 +56,8 @@ class Main extends Component {
       if (res.status === 201) {
         this.setState({ currentPartyID: res.body.currentPartyID });
         this.props.socket.emit("joinParty", {
-          room: res.body.currentPartyID,
-          clientID: res.body.currentClientID
+          room: res.body.currentPartyID
+          //clientID: res.body.currentClientID
         });
       }
     });
@@ -66,7 +66,7 @@ class Main extends Component {
   exitParty() {
     this.props.am.delete("parties").then(res => {
       this.props.socket.emit("leaveParty", { room: this.state.currentPartyID });
-      this.setState({ currentPartyMembers: ["", "", "", ""] });
+      this.setState({ currentPartyMembers: ["...", "...", "...", "..."] });
       console.log("exited party");
     });
   }
@@ -107,7 +107,7 @@ class Main extends Component {
         if (i < data.currentMembers.length)
           currentParty[i] = data.currentMembers[i];
         else {
-          currentParty[i] = "";
+          currentParty[i] = "...";
           partyFull = false;
         }
       }
