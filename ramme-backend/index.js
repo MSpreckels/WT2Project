@@ -2,7 +2,7 @@ var express = require("express");
 var app = express();
 var server = require("http").createServer(app);
 var io = require("socket.io")(server);
-
+const path = require("path");
 global.io = io;
 
 const bodyParser = require("body-parser");
@@ -21,11 +21,12 @@ const url = "mongodb://localhost/rammeDb";
 var whitelist = [
   "http://localhost:3000",
   "http://81.169.194.105:5000",
-  "http://m-spreckels.net"
+  "http://m-spreckels.net",
+  "http://localhost:8080"
 ];
 var corsOptions = {
   origin: function(origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (/*whitelist.indexOf(origin) !== -1*/ true) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
@@ -59,6 +60,7 @@ app.use(
 app.use(sessionManager.initializeSession);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "../ramme/build")));
 
 app.get("/", (req, res) => {
   res.redirect("http://" + req.hostname + ":5000");
@@ -97,6 +99,8 @@ app.delete("/api/parties", (req, res) => {
     partyManager.deleteFromParty(req.session.currentPartyId, req.session.id)
   );
 });
-
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "../build/index.html"));
+});
 const port = process.env.PORT || 5000;
 server.listen(port, () => console.log(`Listening on port ${port}...`));
