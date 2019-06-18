@@ -15,8 +15,8 @@ const partyManager = require("./modules/partyManager");
 const cors = require("cors");
 const catchphraseManager = require("./modules/catchphraseManager");
 
-const url = "mongodb://localhost/rammeDb";
-//"mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
+const url =
+  "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 
 var whitelist = [
   "http://localhost:3000",
@@ -26,7 +26,7 @@ var whitelist = [
 ];
 var corsOptions = {
   origin: function(origin, callback) {
-    if (/*whitelist.indexOf(origin) !== -1*/ true) {
+    if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
@@ -73,11 +73,8 @@ app.get("/api/locations", (req, res) => {
   res.send(temmplateData.locations);
 });
 
-/*app.get("/api/catchphrases", (req, res) => {
-  res.send(temmplateData.catchphrases);
-});*/
 app.get("/api/catchphrases", catchphraseManager.getCatchphrases);
-//app.post("/api/catchphrases", catchphraseManager.sendCatchphrases);
+
 io.on("connection", socket => {
   socket.on("joinParty", async data => {
     socket.join(data.room);

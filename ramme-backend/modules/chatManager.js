@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const sessionManager = require("./sessionManager");
 
-const url = "mongodb://localhost/rammeDb";
-//"mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
+const url =
+  "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 
 let messageScheme = {
   sessionid: String,

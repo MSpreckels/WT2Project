@@ -1,8 +1,8 @@
 const fs = require("fs");
 const uuid = require("uuid/v4");
 const mongoose = require("mongoose");
-const url = "mongodb://localhost/rammeDb";
-// "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
+const url =
+  "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 let sessionScheme = {
   _id: String,
   expires: Date,

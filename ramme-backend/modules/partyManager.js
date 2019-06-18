@@ -1,5 +1,5 @@
-const url = "mongodb://localhost/rammeDb";
-//"mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
+const url =
+  "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 const ObjectID = require("mongodb").ObjectID;
 const mongoose = require("mongoose");
 const sessionManager = require("./sessionManager");
@@ -51,7 +51,6 @@ async function addToParty(req, res) {
   req.session.currentPartyId = party._id;
   req.session.save();
 
-  console.log(party);
   //console.log({member: party.members});
   res
     .status(201)
