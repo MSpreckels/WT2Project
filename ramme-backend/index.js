@@ -15,6 +15,9 @@ const partyManager = require("./modules/partyManager");
 const cors = require("cors");
 const catchphraseManager = require("./modules/catchphraseManager");
 
+const url = "mongodb://localhost/rammeDb";
+//"mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
+
 var whitelist = [
   "http://localhost:3000",
   "http://81.169.194.105:5000",
@@ -32,8 +35,7 @@ var corsOptions = {
 };
 
 var store = new MongoDBStore({
-  uri:
-    "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true",
+  uri: url,
   collection: "sessions"
 });
 
@@ -83,7 +85,7 @@ io.on("connection", socket => {
   });
 });
 
-socket.on("leaveParty", async data => {
+io.on("leaveParty", async data => {
   socket.leave(data.room);
 });
 

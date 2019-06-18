@@ -1,5 +1,5 @@
-const url =
-  "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
+const url = "mongodb://localhost/rammeDb";
+//"mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 const ObjectID = require("mongodb").ObjectID;
 const mongoose = require("mongoose");
 const sessionManager = require("./sessionManager");
@@ -74,61 +74,61 @@ async function addToParty(req, res) {
 async function deleteFromParty(p_idPartyHex, p_idMember) {
   const objectIdParty = p_idPartyHex; //new ObjectID(p_idPartyHex);
   mongoose.connect(url, { useNewUrlParser: true });
-
-  /*party = await Parties.findOneAndUpdate(
-    {
-      _id: objectIdParty
-    },
-    {
-      $pull: { members: p_idMember }
-    },
-    {
-      new: true,
-      useFindAndModify: false
-    }
-  );*/
-
-  await Parties.findById(objectIdParty, async (err, party) => {
-    if (err) console.log(err);
-    await party.members.remove(p_idMember);
+  try {
+    let party = await Parties.findOneAndUpdate(
+      {
+        _id: objectIdParty
+      },
+      {
+        $pullAll: { members: [p_idMember] }
+      },
+      {
+        new: true,
+        useFindAndModify: false
+      }
+    );
     if (party.members.length == 0) {
-      await Parties.deleteOne({ _id: objectIdParty }, err => {
-        party = {};
-      });
-    }
-
-    console.log(party);
-    if (party != {})
+      await Parties.deleteOne({ _id: objectIdParty });
+    } else {
       global.io
         .in(p_idPartyHex)
         .emit("OnPartyLeave", { currentMembers: await getNames(party._id) });
-
+    }
     return party;
-  });
+  } catch (error) {
+    console.error(error);
+  } finally {
+  }
 }
 async function getNames(p_idPartyHex) {
   mongoose.connect(url, { useNewUrlParser: true });
-  let party = await Parties.findById(p_idPartyHex);
   let names = [];
-  for (var member of party.members) {
-    names.push(await sessionManager.getName(member));
+  try {
+    let party = await Parties.findById(p_idPartyHex);
+
+    if (party.members)
+      for (var member of party.members) {
+        names.push(await sessionManager.getName(member));
+      }
+    return names;
+  } catch (error) {
+    console.error(error);
   }
-  return names;
 }
 async function getGroup(req, res, next) {
-  mongoose.connect(
-    "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true",
-    { useNewUrlParser: true }
-  );
+  mongoose.connect(url, { useNewUrlParser: true });
   try {
-    let party = await Parties.find({ members: req.session.id }).sort({
-      timeEnd: -1
-    });
-    //console.log(new Date(party[1].timeEnd));
-    if (party) res.send({ partyID: party[0]._id });
-    else res.status(404).send({ partyID: null });
+    let party = await Parties.find({ members: req.session.id })
+      .sort({
+        timeEnd: -1
+      })
+      .limit(1);
+    console.log("Party found: ", party);
+    if (party) res.send({ groupID: party[0]._id });
+    else res.status(404).send({ groupID: null });
   } catch (error) {
     console.log(error);
+  } finally {
   }
 }
 

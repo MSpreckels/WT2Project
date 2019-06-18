@@ -1,6 +1,8 @@
 const fs = require("fs");
 const uuid = require("uuid/v4");
 const mongoose = require("mongoose");
+const url = "mongodb://localhost/rammeDb";
+// "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 let sessionScheme = {
   _id: String,
   expires: Date,
@@ -30,10 +32,7 @@ function initializeSession(req, res, next) {
 }
 
 async function validateSession(req) {
-  mongoose.connect(
-    "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true",
-    { useNewUrlParser: true }
-  );
+  mongoose.connect(url, { useNewUrlParser: true });
   try {
     var query = await Sessions.findOne({
       _id: req.session.id
@@ -41,14 +40,12 @@ async function validateSession(req) {
     return query.session.securityToken === req.session.securityToken;
   } catch (error) {
     //console.error(error);
+  } finally {
   }
 }
 
 async function getName(_id) {
-  mongoose.connect(
-    "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true",
-    { useNewUrlParser: true }
-  );
+  mongoose.connect(url, { useNewUrlParser: true });
   try {
     var query = await Sessions.findOne({
       _id: _id
