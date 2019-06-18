@@ -11,25 +11,16 @@ class Chat extends Component {
 
     componentDidMount() {
         this.props.am.get("messages")
-            .then(res => this.setState({ res: res.body.messages }))
+            .then(res => this.setState({ res: res.body.messages.slice(0).reverse() }))
             .catch(console.log);
 
         this.props.socket.on("message", msg => {
             this.setState({ res: this.state.res.concat([msg.concat(sendMessage)]) });
             sendMessage = false;
         });
-
-        /*setInterval(() => {
-            am.initialize(() => {
-                am.get("messages")
-                    .then(res => this.setState({ res }))
-                    .catch(console.log);
-            }).catch(console.log);
-        }, 1000);*/
     }
 
     render() {
-        //return <img src={chat} alt="Chat" className="center" />;
         return (
             <Popup
                 trigger={
@@ -46,13 +37,8 @@ class Chat extends Component {
     }
 
     sendMessage = msg => {
-        //console.log(msg);
+        sendMessage = true;
         this.props.am.post("messages", { message: msg })
-            .then(res => {
-                sendMessage = true;
-                console.log(res);
-                //this.setState({ res: this.state.res.concat([res]) });
-            })
             .catch(console.log);
     };
 }

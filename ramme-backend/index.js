@@ -19,10 +19,7 @@ const url =
   "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 
 var whitelist = [
-  "http://localhost:3000",
-  "http://81.169.194.105:5000",
-  "http://m-spreckels.net",
-  "http://localhost:8080"
+  "http://localhost:3000"
 ];
 var corsOptions = {
   origin: function(origin, callback) {

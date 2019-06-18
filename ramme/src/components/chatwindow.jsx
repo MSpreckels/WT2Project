@@ -25,7 +25,7 @@ class ChatWindow extends Component {
                     ))}
                 </div>
                 <div>
-                    <input id="chatMessage" type="input" onKeyDown={e => InvokeButtonClickOnEnter(e)} />
+                    <input id="chatMessage" type="input" placeholder="Nachricht schreiben..." autocomplete="off" onKeyDown={e => InvokeButtonClickOnEnter(e)} />
                     <button
                         id="chatMessageButton"
                         onClick={() => {

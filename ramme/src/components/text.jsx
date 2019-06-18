@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import "../css/text.css";
 
-//TODO: should this be saved as a state?
-
 class Text extends Component {
   state = {};
 

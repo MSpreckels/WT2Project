@@ -4,31 +4,45 @@ const sessionManager = require("./sessionManager");
 const url =
   "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 
-let messageScheme = {
-  sessionid: String,
+let messagesScheme = {
+  partyID: Number,
+  messages: [{sessionid: String,
   name: String,
   message: String,
-  timestamp: Number
+  timestamp: Number}]
 };
 
-const Message = mongoose.model("chatmessages", messageScheme);
+const Messages = mongoose.model("chatmessages", messagesScheme);
 
 async function getMessages(req, res) {
   if (await sessionManager.validateSession(req)) {
     mongoose.connect(url, { useNewUrlParser: true });
 
-    //TODO: only take message in the group of current id
-    Message.find({}, (err, messages) => {
-      if (err) console.log(err);
-      if (messages)
-        res.send({
-          messages: messages.map(x => [
-            x.name,
-            x.message,
-            x.sessionid === req.session.id
-          ])
-        });
-    });
+    let messages = {};
+
+    messages = await Messages.findOneAndUpdate(
+      {
+        partyID: req.session.currentPartyID
+      },
+      { new: true, useFindAndModify: false }
+    );
+  
+    if (messages == null) {
+      messages = await Messages.create({
+        partyID: req.session.currentPartyID,
+        messages:[]
+      });
+    }
+    else
+    {      
+      res.send({
+        messages: messages.messages.map(x => [
+          x.name,
+          x.message,
+          x.sessionid === req.session.id
+        ])
+      });
+    }
   }
 }
 
@@ -36,26 +50,26 @@ async function sendMessage(req, res) {
   if (await sessionManager.validateSession(req)) {
     mongoose.connect(url, { useNewUrlParser: true });
 
-    let message = new Message({
-      sessionid: req.session.id,
-      name: req.session.name,
-      message: req.body.message,
-      timestamp: new Date().getTime()
-    });
-    message.save(err => {
-      if (err) res.status(500).send({ message: "message could not be send " });
+    messages = await Messages.findOneAndUpdate(
+      {
+        partyID: req.session.currentPartyID
+      },
+      {
+        $push: {messages: {$each: [{sessionid: req.session.id,
+          name: req.session.name,
+          message: req.body.message,
+          timestamp: new Date().getTime()}],
+        $sort: {timestamp: -1}}}
+      },
+      { new: true, useFindAndModify: false }
+    );
 
-      res.status(201).send({ message: "message send." });
-      Message.find()
-        .sort("-timestamp")
-        .limit(1)
-        .exec((err, x) => {
-          if (err) console.log(err);
-          global.io
-            .in(req.session.currentPartyID)
-            .emit("message", [x[0].name, x[0].message]);
-        });
-    });
+    if(messages != null)
+    {
+      global.io
+      .in(req.session.currentPartyId)
+      .emit("message", [messages.messages[0].name, messages.messages[0].message]);
+    }
   }
 }
 

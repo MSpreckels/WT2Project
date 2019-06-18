@@ -6,8 +6,7 @@ import "../css/main.css";
 
 class Main extends Component {
   state = {
-    names: null,
-    activity: 0,
+    activity: 0,//0 = not searching, 1 = searching/in a group
     hasParty: false,
     locations: [],
     meetingTime: 0,
@@ -19,10 +18,10 @@ class Main extends Component {
 
   onButtonClick = lastButtonState => {
     const activity = this.state.activity === 0 ? 1 : 0;
-
-    if (lastButtonState === 0) this.searchForAvailableGroup(); //if last button state was start then we are looking for a party now
-    if (lastButtonState === 1) this.exitParty();
     this.setState({ activity: activity });
+
+    if (lastButtonState === 0) this.searchForAvailableGroup(); //if last button state was start then we are looking for a party
+    if (lastButtonState === 1) this.exitParty(); //if we were looking for a party, exitParty
   };
 
   onTimeChange = timeID => {
@@ -35,29 +34,20 @@ class Main extends Component {
   };
 
   searchForAvailableGroup() {
-    //check if there are parties available who arent full yet
-    //if none is found create a new party
-    //for debug purposes i'll use setTimeout
     let currentTime = new Date().getTime();
     let partyInfos = {
       location: this.state.meetingLocation,
       timeStart: currentTime,
       timeEnd: currentTime + this.state.meetingTime * 60000
     };
-
-    //TODO: Fetch names of members
+    
+    //check if there are parties available who arent full yet
+    //if none is found create a new party
     this.props.am.post("parties", partyInfos).then(res => {
-      // let members = this.state.currentPartyMembers;
-      // for(let i = 0; i < members.length; i++)
-      // {
-      //     members[i] = i < res.body.members.length ? res.body.members[i] : "...";
-      // }
-      // this.setState({currentPartyMembers: members});
       if (res.status === 201) {
         this.setState({ currentPartyID: res.body.currentPartyID });
         this.props.socket.emit("joinParty", {
           room: res.body.currentPartyID
-          //clientID: res.body.currentClientID
         });
       }
     });
@@ -71,14 +61,8 @@ class Main extends Component {
     });
   }
 
-  foundParty = () => {
-    console.log("found a party! \\o/");
-    this.setState({ hasParty: true });
-  };
   componentWillMount() {
     this.props.am.get("parties").then(res => {
-      console.log(res);
-
       if (res.status === 200) {
         this.setState({
           currentPartyID: res.body.partyID,
@@ -86,19 +70,23 @@ class Main extends Component {
         });
         this.props.socket.emit("joinParty", {
           room: res.body.groupID
-          //clientID: res.body.currentClientID
         });
       }
     });
   }
+
   componentDidMount() {
+    //Fetch Locations
     this.props.am
       .get("locations")
       .then(res => this.setState({ locations: res.body }));
+
+    //Fetch Catchphrases
     this.props.am
       .get("catchphrases")
       .then(res => this.setState({ catchphrases: res.body.catchphrases }));
 
+    //Handle OnPartyJoin socketio event
     this.props.socket.on("OnPartyJoin", data => {
       console.log("OnPartyJoin ", data);
       let currentParty = this.state.currentPartyMembers;
@@ -113,9 +101,9 @@ class Main extends Component {
       }
 
       this.setState({ currentPartyMembers: currentParty, hasParty: partyFull });
-      //TODO: check if current party is full and set this.foundParty to true
     });
 
+    //Handle OnPartyLeave socketio event
     this.props.socket.on("OnPartyLeave", data => {
       console.log(data);
       let currentParty = this.state.currentPartyMembers;

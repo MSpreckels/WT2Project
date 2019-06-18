@@ -51,14 +51,10 @@ async function addToParty(req, res) {
   req.session.currentPartyId = party._id;
   req.session.save();
 
-  //console.log({member: party.members});
   res
     .status(201)
     .send({ currentPartyID: party._id, currentClientID: p_idMember });
 
-  //TODO: add socketio emit to notify other party members someone joined
-
-  //return {member: party.members};
 }
 
 /**
@@ -99,6 +95,8 @@ async function deleteFromParty(p_idPartyHex, p_idMember) {
   } finally {
   }
 }
+
+
 async function getNames(p_idPartyHex) {
   mongoose.connect(url, { useNewUrlParser: true });
   let names = [];
