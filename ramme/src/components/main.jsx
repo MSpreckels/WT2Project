@@ -121,7 +121,7 @@ class Main extends Component {
       let currentParty = this.state.currentPartyMembers;
       for (let i = 0; i < currentParty.length; i++) {
         currentParty[i] =
-          i < data.currentMembers.length ? data.currentMembers[i] : "";
+          i < data.currentMembers.length ? data.currentMembers[i] : "...";
       }
       this.setState({ currentPartyMembers: currentParty });
     });
