@@ -25,17 +25,7 @@ class ChatWindow extends Component {
                     ))}
                 </div>
                 <div>
-                    <input id="chatMessage" type="input" placeholder="Nachricht schreiben..." autocomplete="off" onKeyDown={e => InvokeButtonClickOnEnter(e)} />
-                    <button
-                        id="chatMessageButton"
-                        onClick={() => {
-                            this.props.onSendMessage(document.getElementById("chatMessage").value);
-                            document.getElementById("chatMessage").value = "";
-                        }}
-                        hidden
-                    >
-                        Send
-                    </button>
+                    <input id="chatMessage" type="input" placeholder="Nachricht schreiben..." autocomplete="off" onKeyDown={this.sendMessage.bind(this)} />
                 </div>
             </div>
         );
@@ -45,11 +35,12 @@ class ChatWindow extends Component {
         const chatMessageContainer = document.getElementById("chatMessageContainer");
         chatMessageContainer.scrollTop = chatMessageContainer.scrollHeight - chatMessageContainer.clientHeight;
     }
-}
 
-function InvokeButtonClickOnEnter(event) {
-    if (event.keyCode === 13) {
-        document.getElementById("chatMessageButton").click();
+    sendMessage = event => {
+        if (event.keyCode === 13) {
+            this.props.onSendMessage(document.getElementById("chatMessage").value);
+            document.getElementById("chatMessage").value = "";
+        }
     }
 }
 
