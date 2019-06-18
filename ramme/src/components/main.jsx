@@ -102,12 +102,17 @@ class Main extends Component {
     this.props.socket.on("OnPartyJoin", data => {
       console.log("OnPartyJoin ", data);
       let currentParty = this.state.currentPartyMembers;
+      let partyFull = true;
       for (let i = 0; i < currentParty.length; i++) {
-        currentParty[i] =
-          i < data.currentMembers.length ? data.currentMembers[i] : "";
+        if (i < data.currentMembers.length)
+          currentParty[i] = data.currentMembers[i];
+        else {
+          currentParty[i] = "";
+          partyFull = false;
+        }
       }
 
-      this.setState({ currentPartyMembers: currentParty });
+      this.setState({ currentPartyMembers: currentParty, hasParty: partyFull });
       //TODO: check if current party is full and set this.foundParty to true
     });
 
@@ -118,7 +123,6 @@ class Main extends Component {
         currentParty[i] =
           i < data.currentMembers.length ? data.currentMembers[i] : "";
       }
-
       this.setState({ currentPartyMembers: currentParty });
     });
   }
