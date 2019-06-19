@@ -17,7 +17,7 @@ class Chat extends Component {
                 }
                 position="top center"
                 closeOnDocumentClick
-                disabled={this.props.activity == 0}
+                disabled={this.props.activity === 0}
             >
                 <ChatWindow messages={this.props.messages != null ? this.props.messages : []} onSendMessage={this.props.onSendMessage} />
             </Popup>
