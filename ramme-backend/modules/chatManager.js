@@ -5,7 +5,7 @@ const url =
   "mongodb+srv://root:rammemongo@rammecluster-qhhyz.mongodb.net/rammedb?retryWrites=true";
 
 let messagesScheme = {
-  partyID: Number,
+  partyID: String,
   messages: [{sessionid: String,
   name: String,
   message: String,
@@ -22,14 +22,14 @@ async function getMessages(req, res) {
 
     messages = await Messages.findOneAndUpdate(
       {
-        partyID: req.session.currentPartyID
+        partyID: req.session.currentPartyId
       },
       { new: true, useFindAndModify: false }
     );
   
     if (messages == null) {
       messages = await Messages.create({
-        partyID: req.session.currentPartyID,
+        partyID: req.session.currentPartyId,
         messages:[]
       });
     }
@@ -52,7 +52,7 @@ async function sendMessage(req, res) {
 
     messages = await Messages.findOneAndUpdate(
       {
-        partyID: req.session.currentPartyID
+        partyID: req.session.currentPartyId
       },
       {
         $push: {messages: {$each: [{sessionid: req.session.id,

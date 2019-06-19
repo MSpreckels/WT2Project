@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import Action from "./action";
 import Activity from "./activity";
 import Text from "./text";
+import Chat from "./chat";
 import "../css/main.css";
+
+var sendMessage = false;
 
 class Main extends Component {
   state = {
@@ -13,7 +16,8 @@ class Main extends Component {
     meetingLocation: "Mensa Hochschule Bochum",
     catchphrases: null,
     currentPartyMembers: ["...", "...", "...", "..."],
-    currentPartyID: null
+    currentPartyID: null,
+    messages: null
   };
 
   onButtonClick = lastButtonState => {
@@ -49,6 +53,7 @@ class Main extends Component {
         this.props.socket.emit("joinParty", {
           room: res.body.currentPartyID
         });
+        this.getMessages();
       }
     });
   }
@@ -56,9 +61,23 @@ class Main extends Component {
   exitParty() {
     this.props.am.delete("parties").then(res => {
       this.props.socket.emit("leaveParty", { room: this.state.currentPartyID });
-      this.setState({ currentPartyMembers: ["...", "...", "...", "..."] });
+      this.setState({ currentPartyMembers: ["...", "...", "...", "..."], currentPartyID: null, messages: null});
       console.log("exited party");
     });
+  }
+
+  //TODO: Send chat message if someone leaves the party?
+  sendMessage = msg => {
+    sendMessage = true;
+    this.props.am.post("messages", { message: msg })
+        .catch(console.log);
+  };
+
+  getMessages()
+  {
+    this.props.am.get("messages")
+    .then(res => this.setState({ messages: res.body.messages.slice(0).reverse() }))
+    .catch(console.log);
   }
 
   componentWillMount() {
@@ -71,6 +90,8 @@ class Main extends Component {
         this.props.socket.emit("joinParty", {
           room: res.body.groupID
         });
+        this.getMessages();
+
       }
     });
   }
@@ -99,7 +120,6 @@ class Main extends Component {
           partyFull = false;
         }
       }
-
       this.setState({ currentPartyMembers: currentParty, hasParty: partyFull });
     });
 
@@ -112,6 +132,21 @@ class Main extends Component {
           i < data.currentMembers.length ? data.currentMembers[i] : "...";
       }
       this.setState({ currentPartyMembers: currentParty });
+    });
+
+    //Handle ChatMessages
+    this.props.socket.on("message", msg => {
+      let message = [msg.concat(sendMessage)];
+
+      if(this.state.messages === null)
+      {
+        this.setState({ messages:  message});
+      }
+      else
+      {          
+        this.setState({ messages: this.state.messages.concat(message) });
+      }
+      sendMessage = false;
     });
   }
 
@@ -137,6 +172,8 @@ class Main extends Component {
           onTimeChange={this.onTimeChange}
           onLocationChange={this.onLocationChange}
         />
+        <Chat activity={this.state.activity} messages={this.state.messages} onSendMessage={this.sendMessage}/>
+
       </main>
     );
   }

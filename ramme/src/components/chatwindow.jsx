@@ -25,7 +25,7 @@ class ChatWindow extends Component {
                     ))}
                 </div>
                 <div>
-                    <input id="chatMessage" type="input" placeholder="Nachricht schreiben..." autocomplete="off" onKeyDown={this.sendMessage.bind(this)} />
+                    <input id="chatMessage" type="input" placeholder="Nachricht schreiben..." autoComplete="off" onKeyDown={this.sendMessage.bind(this)} />
                 </div>
             </div>
         );

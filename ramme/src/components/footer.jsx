@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Chat from "./chat";
 import "../css/footer.css";
 
 class Footer extends Component {
@@ -7,7 +6,6 @@ class Footer extends Component {
   render() {
     return (
       <footer>
-        <Chat socket={this.props.socket} am={this.props.am}/>
         {/* <Info /> */}
       </footer>
     );
